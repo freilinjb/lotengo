@@ -12,8 +12,9 @@ import Swal from 'sweetalert2';
 import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal'
 const Consorcio = () => {
   const [open, setOpen] = useState(false);
+  const [consorcioActualizar, setConsorcioActualizar] = useState({});
 
-    const { saludar, getConsorcios, consorcios, mensajeConsorcio } = useConsorcio()
+    const { saludar, getConsorcios, consorcios, mensajeConsorcio, getConsorcioByID } = useConsorcio()
 
     useEffect(() => {
         saludar('Freilin Jose')
@@ -24,6 +25,17 @@ const Consorcio = () => {
         getConsorcios();
         // setOpen(false);
     }, [mensajeConsorcio]);
+
+    const openModalActualizar = (consorcio) => {
+        setConsorcioActualizar(consorcio);
+
+        setOpen(true);
+    }
+
+    const openModalRegistrar = () => {
+        setConsorcioActualizar(false);
+        setOpen(true);
+    }
 
 
     const useStyles = makeStyles((theme) => ({
@@ -106,6 +118,7 @@ const Consorcio = () => {
                                 color="primary"
                                 className={classes.button}
                                 aria-label="edit"
+                                onClick={() => openModalActualizar(consorcios[value])}
                             >
                                 <Icon>edit</Icon>
                             </IconButton>
@@ -122,7 +135,7 @@ const Consorcio = () => {
 
     const CustomToolbar = () => (
       <Tooltip title={"Agregar nuevo consorcio"}>
-          <IconButton className={classes.iconButton} onClick={()  =>  setOpen(true)/*handleClick('freilin')*/}>
+          <IconButton className={classes.iconButton} onClick={()  =>  openModalRegistrar()/*handleClick('freilin')*/}>
             <AddIcon className={classes.deleteIcon} />
           </IconButton>
         </Tooltip>
@@ -170,7 +183,7 @@ const Consorcio = () => {
                         </Grid>
                     </Grid>
                 </SimpleCard>
-                <ConsorcioRegistroModal open={open} setOpen={setOpen}/>
+                <ConsorcioRegistroModal open={open} setOpen={setOpen} consorcioActualizar={consorcioActualizar}/>
 
                 <Button
                     onClick={() => Swal.fire('Notificacion','Se ha guardado de forma correcta', 'success')}

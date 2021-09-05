@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
@@ -15,12 +15,9 @@ import {
     Radio,
     RadioGroup,
     FormControlLabel,
-    Checkbox,
     TextField,
-    File
 } from '@material-ui/core'
 import 'date-fns'
-import DateFnsUtils from '@date-io/date-fns'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -37,11 +34,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export default function ConsorcioRegistroModal({ open, setOpen }) {
+export default function ConsorcioRegistroModal({ open, setOpen, consorcioActualizar }) {
     const { saludar, registrarConsorcio, mensajeConsorcio, getConsorcios } = useConsorcio()
 
 
+    
     const [state, setState] = useState({
+        idConsorcio: 0,
         nombre: "",
         slogan: "",
         mensajeDespedida: "",
@@ -52,7 +51,39 @@ export default function ConsorcioRegistroModal({ open, setOpen }) {
         direccion: "",
         status: "1",
     })
-
+    useEffect(() => {
+        if(Object.keys(consorcioActualizar).length !== 0) {
+            console.log('actualizando: ', consorcioActualizar);
+            setState({
+                ...state,
+                idConsorcio: consorcioActualizar.idConsorcio,
+                nombre: consorcioActualizar.nombre,
+                slogan: consorcioActualizar.slogan,
+                mensajeDespedida: consorcioActualizar.mensajeTicket,
+                correo: consorcioActualizar.correo,
+                telefono: consorcioActualizar.telefono,
+                sector: consorcioActualizar.nombre,
+                direccion: consorcioActualizar.nombre,
+                status: consorcioActualizar.estado.toString(),
+            });
+        } else {
+            setState({
+                ...state,
+                idConsorcio: 0,
+                nombre: "",
+                slogan: "",
+                mensajeDespedida: "",
+                correo: "",
+                telefono: "",
+                ciudad: "",
+                sector: "",
+                direccion: "",
+                status: "1",
+            });
+            console.log('registrando: ', consorcioActualizar);
+        }
+    },[consorcioActualizar]);
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         const codigo = await registrarConsorcio(state);

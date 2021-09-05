@@ -27,6 +27,7 @@ const ConsorcioContext = createContext({
     consorcios: [],
     cargandoConsorcios: [],
     mensajeConsorcio: '',
+    mensajeConsorcio: '',
     // deleteNotification: () => {},
     // clearNotifications: () => {},
     // getNotifications: () => {},
@@ -54,16 +55,17 @@ export const ConsorcioProvider = ({ settings, children }) => {
                     payload: 'Se ha registrado de forma correcta!!',
                 });
 
-                // alert('Se ha registrado de forma corecta');
             }
-            // console.log('responseRegistrados: ', response);
-
             return response.status;
             
         }).catch((error) => {
             console.log('Error: ', error);
             return 500;
         });
+    }
+
+    const getConsorcioByID = async (idConsorcio) => {
+        console.log('idConsorcio: ', idConsorcio);
     }
 
     const getConsorcios = async (consorcio) => {
@@ -94,6 +96,7 @@ export const ConsorcioProvider = ({ settings, children }) => {
                 mensajeConsorcio: state.mensajeConsorcio,
                 saludar,
                 getConsorcios,
+                getConsorcioByID,
                 registrarConsorcio
             }}
         >
