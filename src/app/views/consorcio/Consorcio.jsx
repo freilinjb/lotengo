@@ -4,7 +4,8 @@ import { Grid, IconButton, Icon, Button } from '@material-ui/core'
 import MUIDataTable from 'mui-datatables'
 import { makeStyles } from '@material-ui/core/styles'
 
-import useConsorcio from 'app/hooks/useConsorcio'
+import useConsorcio from 'app/hooks/useConsorcio';
+import useGeneral from 'app/hooks/useGeneral';
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from "@material-ui/core/Tooltip";
 import Swal from 'sweetalert2';
@@ -14,17 +15,16 @@ const Consorcio = () => {
   const [open, setOpen] = useState(false);
   const [consorcioActualizar, setConsorcioActualizar] = useState({});
 
-    const { saludar, getConsorcios, consorcios, mensajeConsorcio, getConsorcioByID } = useConsorcio()
+    const { getConsorcios, consorcios, mensajeConsorcio, getConsorcioByID } = useConsorcio()
+    const { saludar } = useGeneral();
 
+    const consultarFetch = async () => {
+        await getConsorcios();
+    }
     useEffect(() => {
         saludar('Freilin Jose')
-        getConsorcios()
+        consultarFetch();
     }, []);
-    
-    useEffect(() => {
-        getConsorcios();
-        // setOpen(false);
-    }, [mensajeConsorcio]);
 
     const openModalActualizar = (consorcio) => {
         setConsorcioActualizar(consorcio);

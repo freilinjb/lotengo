@@ -6,7 +6,8 @@ import Fade from '@material-ui/core/Fade'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import { Autocomplete, createFilterOptions } from '@material-ui/lab'
 import useConsorcio from 'app/hooks/useConsorcio'
-import Swal from 'sweetalert2';
+import useGeneral from 'app/hooks/useGeneral'
+import Swal from 'sweetalert2'
 
 import {
     Button,
@@ -16,6 +17,11 @@ import {
     RadioGroup,
     FormControlLabel,
     TextField,
+    Card,
+    CardContent,
+    CardMedia,
+    Paper,
+    Avatar,
 } from '@material-ui/core'
 import 'date-fns'
 
@@ -34,26 +40,34 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export default function ConsorcioRegistroModal({ open, setOpen, consorcioActualizar }) {
-    const { saludar, registrarConsorcio, mensajeConsorcio, getConsorcios } = useConsorcio()
+export default function ConsorcioRegistroModal({
+    open,
+    setOpen,
+    consorcioActualizar,
+}) {
+    const { saludar, registrarConsorcio, mensajeConsorcio, getConsorcios } =
+        useConsorcio()
+    const { getCiudades, ciudades } = useGeneral()
 
+    useEffect(() => {
+        getCiudades()
+    }, [])
 
-    
     const [state, setState] = useState({
         idConsorcio: 0,
-        nombre: "",
-        slogan: "",
-        mensajeDespedida: "",
-        correo: "",
-        telefono: "",
-        ciudad: "",
-        sector: "",
-        direccion: "",
-        status: "1",
+        nombre: '',
+        slogan: '',
+        mensajeDespedida: '',
+        correo: '',
+        telefono: '',
+        ciudad: '',
+        sector: '',
+        direccion: '',
+        status: '1',
     })
     useEffect(() => {
-        if(Object.keys(consorcioActualizar).length !== 0) {
-            console.log('actualizando: ', consorcioActualizar);
+        if (Object.keys(consorcioActualizar).length !== 0) {
+            console.log('actualizando: ', consorcioActualizar)
             setState({
                 ...state,
                 idConsorcio: consorcioActualizar.idConsorcio,
@@ -65,45 +79,44 @@ export default function ConsorcioRegistroModal({ open, setOpen, consorcioActuali
                 sector: consorcioActualizar.nombre,
                 direccion: consorcioActualizar.nombre,
                 status: consorcioActualizar.estado.toString(),
-            });
+            })
         } else {
             setState({
                 ...state,
                 idConsorcio: 0,
-                nombre: "",
-                slogan: "",
-                mensajeDespedida: "",
-                correo: "",
-                telefono: "",
-                ciudad: "",
-                sector: "",
-                direccion: "",
-                status: "1",
-            });
-            console.log('registrando: ', consorcioActualizar);
+                nombre: '',
+                slogan: '',
+                mensajeDespedida: '',
+                correo: '',
+                telefono: '',
+                ciudad: '',
+                sector: '',
+                direccion: '',
+                status: '1',
+            })
+            console.log('registrando: ', consorcioActualizar)
         }
-    },[consorcioActualizar]);
-    
+    }, [consorcioActualizar])
+
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        const codigo = await registrarConsorcio(state);
-        console.log('codigo: ', codigo);
-        if(codigo === 200) {
-            Swal.fire(
-                'Good job!',
-                'You clicked the button!',
-                'success'
-              ).then((result) => {
-                  if(result.isConfirmed) {
-                    setOpen(false);
-                  }
-              })
+        event.preventDefault()
+        const codigo = await registrarConsorcio(state)
+        console.log('codigo: ', codigo)
+        if (codigo === 200) {
+            Swal.fire('Good job!', 'You clicked the button!', 'success').then(
+                (result) => {
+                    if (result.isConfirmed) {
+                        setOpen(false)
+                        getConsorcios()
+                    }
+                }
+            )
         }
     }
 
     const handleChange = (event) => {
         // event.persist();
-        console.log('evento: ', event.target.value);
+        console.log('nombre: ', event.target.name)
         setState({
             ...state,
             [event.target.name]: event.target.value,
@@ -111,17 +124,17 @@ export default function ConsorcioRegistroModal({ open, setOpen, consorcioActuali
     }
 
     const handleDateChange = (date) => {
-        setState({ ...state, date });
+        setState({ ...state, date })
     }
 
     const classes = useStyles()
 
     const handleOpen = () => {
-        setOpen(true);
+        setOpen(true)
     }
 
     const handleClose = () => {
-        setOpen(false);
+        setOpen(false)
     }
 
     return (
@@ -136,16 +149,55 @@ export default function ConsorcioRegistroModal({ open, setOpen, consorcioActuali
                 BackdropProps={{
                     timeout: 500,
                 }}
-                style={{zIndex: 100}}
+                style={{ zIndex: 100 }}
             >
                 <Fade in={open}>
                     <div className={classes.paper}>
                         <h2 id="transition-modal-title">
                             Registro de Consorcio
                         </h2>
-                        <hr/>
+                        <hr />
+                        <Card
+                            border="light"
+                            className="bg-white shadow-sm mb-4"
+                        >
+                            <div className="d-xl-flex align-items-center">
+                                <div className="user-avatar xl-avatar">
+                                    <CardMedia>
+                                        <Avatar
+                                            style={{
+                                                height: '90px',
+                                                width: '90px',
+                                            }}
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs03_SqIWGSw_H6T1YJCvhn1zR3oAsL41JHuE69BCCLsxFKHP1PdpMcqPc9A9kYdWpsFU&usqp=CAU"
+                                        />
+                                    </CardMedia>
+                                </div>
+                                <CardContent>
+                                    <div className="file-field">
+                                        <div className="d-flex justify-content-xl-center ms-xl-3">
+                                            <div className="d-flex">
+                                                <Button
+                                                    variant="contained"
+                                                    component="label"
+                                                >
+                                                    <Icon>upload</Icon>
+                                                    Subir Logo
+                                                    <input type="file" hidden />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </div>
+                        </Card>
+
                         <div className="p-4 h-full">
-                            <form onSubmit={handleSubmit} noValidate autoComplete="off">
+                            <form
+                                onSubmit={handleSubmit}
+                                noValidate
+                                autoComplete="off"
+                            >
                                 <Grid container spacing={3}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
@@ -214,31 +266,71 @@ export default function ConsorcioRegistroModal({ open, setOpen, consorcioActuali
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            required
-                                            variant="outlined"
-                                            size="small"
-                                            id="ciudad"
+                                        <Autocomplete
                                             name="ciudad"
-                                            label="Ciudad"
-                                            value={state.ciudad}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            autoComplete=""
+                                            options={ciudades}
+                                            onChange={(event, newValue) => {
+                                                if (newValue !== null) {
+                                                    setState({
+                                                        ...state,
+                                                        ciudad: newValue.idCiudad,
+                                                    })
+                                                    console.log(
+                                                        'valores: ',
+                                                        state
+                                                    )
+                                                }
+                                            }}
+                                            getOptionLabel={(option) =>
+                                                option.ciudad
+                                            }
+                                            renderOption={(option) =>
+                                                option.ciudad
+                                            }
+                                            size="small"
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    name="ciudad"
+                                                    {...params}
+                                                    label="Ciudad"
+                                                    variant="outlined"
+                                                    fullWidth
+                                                />
+                                            )}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            required
-                                            variant="outlined"
-                                            size="small"
-                                            id="sector"
+                                        <Autocomplete
                                             name="sector"
-                                            label="sector"
-                                            value={state.sector}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            autoComplete="shipping country"
+                                            options={ciudades}
+                                            onChange={(event, newValue) => {
+                                                if (newValue !== null) {
+                                                    setState({
+                                                        ...state,
+                                                        ciudad: newValue.idCiudad,
+                                                    })
+                                                    console.log(
+                                                        'valores: ',
+                                                        state
+                                                    )
+                                                }
+                                            }}
+                                            getOptionLabel={(option) =>
+                                                option.ciudad
+                                            }
+                                            renderOption={(option) =>
+                                                option.ciudad
+                                            }
+                                            size="small"
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    name="sector"
+                                                    {...params}
+                                                    label="Sector"
+                                                    variant="outlined"
+                                                    fullWidth
+                                                />
+                                            )}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
@@ -258,28 +350,6 @@ export default function ConsorcioRegistroModal({ open, setOpen, consorcioActuali
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                    <input
-                                        accept="image/*"
-                                        className={classes.input}
-                                        style={{ display: 'none' }}
-                                        onChange={handleChange}
-                                        id="raised-button-file"
-                                        type="file"
-                                        />
-                                        <label htmlFor="raised-button-file">
-                                        <Button  color="primary" component="span" className={classes.button}
-                                            variant="contained"
-                                            onChange={handleChange}
-                                        >
-                                            Subig Logo
-                                        </Button>
-                                        </label> 
-
-                                        <p>{state.foto}</p>
-                                    </Grid>
-
-
-                                    <Grid item xs={12}>
                                         <RadioGroup
                                             className="mb-4"
                                             value={state.status || ''}
@@ -287,21 +357,24 @@ export default function ConsorcioRegistroModal({ open, setOpen, consorcioActuali
                                             onChange={handleChange}
                                             row
                                         >
-                                        <FormControlLabel
-                                            value="1"
-                                            control={<Radio color="secondary" />}
-                                            label="Activo"
-                                            labelPlacement="end"
-                                        />
-                                        <FormControlLabel
-                                            value="0"
-                                            control={<Radio color="secondary" />}
-                                            label="Inactivo"
-                                            labelPlacement="end"
-                                        />
-                                  </RadioGroup>
+                                            <FormControlLabel
+                                                value="1"
+                                                control={
+                                                    <Radio color="secondary" />
+                                                }
+                                                label="Activo"
+                                                labelPlacement="end"
+                                            />
+                                            <FormControlLabel
+                                                value="0"
+                                                control={
+                                                    <Radio color="secondary" />
+                                                }
+                                                label="Inactivo"
+                                                labelPlacement="end"
+                                            />
+                                        </RadioGroup>
                                     </Grid>
-
                                     <Button
                                         color="primary"
                                         variant="contained"

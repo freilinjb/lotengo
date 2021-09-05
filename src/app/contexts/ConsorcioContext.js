@@ -64,6 +64,33 @@ export const ConsorcioProvider = ({ settings, children }) => {
         });
     }
 
+    const actualizarConsorcio = async (consorcio) => {
+        console.log('consorcio: ', consorcio);
+        // return;
+       return await clienteAxios.post('api/consorcio', {
+            idConsorcio: consorcio.idConsorcio,
+            nombre: consorcio.nombre,
+            slogan: consorcio.slogan,
+            mensajeTicket: consorcio.mensajeDespedida,
+            telefono: consorcio.telefono,
+            correo: consorcio.correo,
+            direccion: consorcio.direccion,
+            status: consorcio.status,
+        }).then(async (response) => {
+            if(response.status) {
+                dispatch({
+                    type: 'MENSAJE',
+                    payload: 'Se ha actualizado de forma correcta!!',
+                });
+            }
+            return response.status;
+            
+        }).catch((error) => {
+            console.log('Error: ', error);
+            return 500;
+        });
+    }
+
     const getConsorcioByID = async (idConsorcio) => {
         console.log('idConsorcio: ', idConsorcio);
     }
@@ -97,7 +124,8 @@ export const ConsorcioProvider = ({ settings, children }) => {
                 saludar,
                 getConsorcios,
                 getConsorcioByID,
-                registrarConsorcio
+                registrarConsorcio,
+                actualizarConsorcio,
             }}
         >
             {children}

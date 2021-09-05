@@ -11,7 +11,8 @@ import sessionRoutes from './views/sessions/SessionRoutes'
 import AuthGuard from './auth/AuthGuard'
 import { AuthProvider } from 'app/contexts/JWTAuthContext'
 import { SettingsProvider } from 'app/contexts/SettingsContext'
-import { ConsorcioProvider } from 'app/contexts/ConsorcioContext'
+import { ConsorcioProvider } from 'app/contexts/ConsorcioContext';
+import { GeneralProvider } from 'app/contexts/GeneralContext';
 
 const App = () => {
     return (
@@ -25,6 +26,7 @@ const App = () => {
                             <AuthProvider>
                                 <MatxSuspense>
                                     <ConsorcioProvider>
+                                    <GeneralProvider>
                                         <Switch>
                                             {/* AUTHENTICATION PAGES (SIGNIN, SIGNUP ETC.) */}
                                             {sessionRoutes.map((item, i) => (
@@ -40,6 +42,7 @@ const App = () => {
                                                 {/* RETURNS <Layout1/> component */}
                                             </AuthGuard>
                                         </Switch>
+                                    </GeneralProvider>
                                     </ConsorcioProvider>
                                 </MatxSuspense>
                             </AuthProvider>
