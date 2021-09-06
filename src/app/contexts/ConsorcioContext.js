@@ -91,6 +91,16 @@ export const ConsorcioProvider = ({ settings, children }) => {
         });
     }
 
+    const eliminarConsorcioByID = async (idConsorcio) => {
+        console.log('eliminarIdC: ', idConsorcio);
+        return await clienteAxios.delete(`api/consorcio/${idConsorcio}`, {}).then( async (results) => {
+            console.log('Eliminar: ', results.data);
+            const datos = {msg: results.data.msg, success: results.data.success};
+            console.log('data despues: ', datos);
+            return datos;
+        });
+    }
+
     const getConsorcioByID = async (idConsorcio) => {
         console.log('idConsorcio: ', idConsorcio);
     }
@@ -126,6 +136,7 @@ export const ConsorcioProvider = ({ settings, children }) => {
                 getConsorcioByID,
                 registrarConsorcio,
                 actualizarConsorcio,
+                eliminarConsorcioByID
             }}
         >
             {children}

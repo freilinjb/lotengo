@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
+import { ValidatorForm, TextValidator, SelectValidator } from 'react-material-ui-form-validator'
 import { Autocomplete, createFilterOptions } from '@material-ui/lab'
 import useConsorcio from 'app/hooks/useConsorcio'
 import useGeneral from 'app/hooks/useGeneral'
@@ -45,7 +45,7 @@ export default function ConsorcioRegistroModal({
     setOpen,
     consorcioActualizar,
 }) {
-    const { saludar, registrarConsorcio, mensajeConsorcio, getConsorcios } =
+    const { saludar, registrarConsorcio, getConsorcios } =
         useConsorcio()
     const { getCiudades, ciudades } = useGeneral()
 
@@ -99,8 +99,20 @@ export default function ConsorcioRegistroModal({
     }, [consorcioActualizar])
 
     const handleSubmit = async (event) => {
-        event.preventDefault()
-        const codigo = await registrarConsorcio(state)
+        // event.preventDefault()
+        // console.log('ejecutando metodo submit');
+        // return;
+        let codigo = 0;
+        if(state.idConsorcio > 0) {
+            alert('Actualizando');
+            return;
+            codigo = await registrarConsorcio(state);
+        } else {
+            alert('Registrando');
+            return;
+            codigo = await registrarConsorcio(state);
+        }
+
         console.log('codigo: ', codigo)
         if (codigo === 200) {
             Swal.fire('Good job!', 'You clicked the button!', 'success').then(
@@ -154,120 +166,118 @@ export default function ConsorcioRegistroModal({
                 <Fade in={open}>
                     <div className={classes.paper}>
                         <h2 id="transition-modal-title">
-                            Registro de Consorcio
+                            <Grid container>
+                            <Avatar
+                                                    style={{
+                                                        height: '40px',
+                                                        width: '40px',
+                                                        marginRight: '10px'
+                                                    }}
+                                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs03_SqIWGSw_H6T1YJCvhn1zR3oAsL41JHuE69BCCLsxFKHP1PdpMcqPc9A9kYdWpsFU&usqp=CAU"
+                                                />
+                                                Registro de Consorcio
+                            </Grid>
+                        
                         </h2>
                         <hr />
-                        <Card
-                            border="light"
-                            className="bg-white shadow-sm mb-4"
-                        >
-                            <div className="d-xl-flex align-items-center">
-                                <div className="user-avatar xl-avatar">
-                                    <CardMedia>
-                                        <Avatar
-                                            style={{
-                                                height: '90px',
-                                                width: '90px',
-                                            }}
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs03_SqIWGSw_H6T1YJCvhn1zR3oAsL41JHuE69BCCLsxFKHP1PdpMcqPc9A9kYdWpsFU&usqp=CAU"
-                                        />
-                                    </CardMedia>
-                                </div>
-                                <CardContent>
-                                    <div className="file-field">
-                                        <div className="d-flex justify-content-xl-center ms-xl-3">
-                                            <div className="d-flex">
-                                                <Button
-                                                    variant="contained"
-                                                    component="label"
-                                                >
-                                                    <Icon>upload</Icon>
-                                                    Subir Logo
-                                                    <input type="file" hidden />
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </div>
-                        </Card>
-
                         <div className="p-4 h-full">
-                            <form
+                            <ValidatorForm
                                 onSubmit={handleSubmit}
                                 noValidate
                                 autoComplete="off"
+                                onError={() => null}
                             >
-                                <Grid container spacing={3}>
+                                
+                                <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
+
+                                        <TextValidator
                                             required
-                                            variant="outlined"
-                                            size="small"
-                                            id="nombre"
-                                            name="nombre"
-                                            label="Nombre"
-                                            value={state.nombre}
-                                            fullWidth
-                                            autoComplete="given-name"
+                                            className="mb-4 w-full"
+                                            label="nombre"
                                             onChange={handleChange}
+                                            type="text"
+                                            name="nombre"
+                                            value={state.nombre || ''}
+                                            variant="outlined"
+                                            fullWidth
+                                            size="small"
+                                            validators={[
+                                                'required',
+                                            ]}
+                                            errorMessages={['Este campo es obligatorio']}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
+                                        <TextValidator
                                             required
-                                            id="slogan"
-                                            variant="outlined"
-                                            size="small"
-                                            value={state.slogan}
-                                            name="slogan"
+                                            className="mb-4 w-full"
                                             label="Slogan"
-                                            fullWidth
-                                            autoComplete="family-name"
                                             onChange={handleChange}
+                                            type="text"
+                                            name="slogan"
+                                            value={state.slogan || ''}
+                                            variant="outlined"
+                                            fullWidth
+                                            size="small"
+                                            validators={[
+                                                'required',
+                                            ]}
+                                            errorMessages={['this field is required']}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <TextField
+
+                                        <TextValidator
                                             required
-                                            variant="outlined"
-                                            size="small"
-                                            value={state.mensajeDespedida}
-                                            id="mensajeDespedida"
+                                            className="mb-4 w-full"
+                                            label="Slogan"
+                                            onChange={handleChange}
+                                            type="text"
                                             name="mensajeDespedida"
-                                            label="Mensaje de Despedida"
-                                            onChange={handleChange}
+                                            value={state.mensajeDespedida || ''}
+                                            variant="outlined"
                                             fullWidth
+                                            size="small"
+                                            validators={[
+                                                'required',
+                                            ]}
+                                            errorMessages={['this field is required']}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
+                                        <TextValidator
                                             required
-                                            variant="outlined"
-                                            size="small"
-                                            id="correo"
-                                            name="correo"
-                                            label="Correo electronico"
-                                            value={state.correo}
-                                            fullWidth
+                                            className="mb-4 w-full"
+                                            label="correo"
                                             onChange={handleChange}
+                                            type="text"
+                                            name="correo"
+                                            value={state.correo || ''}
+                                            variant="outlined"
+                                            fullWidth
+                                            size="small"
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            variant="outlined"
-                                            size="small"
-                                            id="telefono"
-                                            name="telefono"
-                                            label="Numero telefonico"
-                                            value={state.telefono}
+                                    <TextValidator
+                                            required
+                                            className="mb-4 w-full"
+                                            label="correo"
                                             onChange={handleChange}
+                                            type="text"
+                                            name="telefono"
+                                            value={state.telefono || ''}
+                                            variant="outlined"
                                             fullWidth
+                                            size="small"
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <Autocomplete
                                             name="ciudad"
+                                            onError="asdfa"
+
                                             options={ciudades}
                                             onChange={(event, newValue) => {
                                                 if (newValue !== null) {
@@ -325,6 +335,7 @@ export default function ConsorcioRegistroModal({
                                             renderInput={(params) => (
                                                 <TextField
                                                     name="sector"
+                                                    size="small"
                                                     {...params}
                                                     label="Sector"
                                                     variant="outlined"
@@ -333,23 +344,27 @@ export default function ConsorcioRegistroModal({
                                             )}
                                         />
                                     </Grid>
+
                                     <Grid item xs={12}>
-                                        <TextField
+                                        <TextValidator
                                             required
-                                            // helperText="Incorrect entry."
-                                            variant="outlined"
-                                            size="small"
-                                            value={state.direccion}
-                                            id="direccion"
-                                            name="direccion"
-                                            value={state.direccion}
+                                            className="mb-4 w-full"
+                                            label="Dirección"
                                             onChange={handleChange}
-                                            label="Direccion"
+                                            type="text"
+                                            name="direccion"
+                                            value={state.direccion || ''}
+                                            variant="outlined"
                                             fullWidth
+                                            size="small"
+                                            validators={[
+                                                'required',
+                                            ]}
+                                            errorMessages={['Este campo es obligatorio']}
                                         />
                                     </Grid>
 
-                                    <Grid item xs={12}>
+                                    <Grid container xs={12} justifyContent="space-between">
                                         <RadioGroup
                                             className="mb-4"
                                             value={state.status || ''}
@@ -374,7 +389,23 @@ export default function ConsorcioRegistroModal({
                                                 labelPlacement="end"
                                             />
                                         </RadioGroup>
+
+                                        
+                                        <Button
+                                            component="label"
+                                            style={{padding: '5px'}}
+                                            >
+                                            Subir imagen
+                                            <input
+                                                type="file"
+                                                hidden
+                                            />
+                                            </Button>
                                     </Grid>
+
+                                    </Grid>
+    
+
                                     <Button
                                         color="primary"
                                         variant="contained"
@@ -385,8 +416,7 @@ export default function ConsorcioRegistroModal({
                                             Guardar
                                         </span>
                                     </Button>
-                                </Grid>
-                            </form>
+                            </ValidatorForm>
                         </div>
                     </div>
                 </Fade>

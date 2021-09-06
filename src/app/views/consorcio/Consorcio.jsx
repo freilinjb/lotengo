@@ -15,7 +15,7 @@ const Consorcio = () => {
   const [open, setOpen] = useState(false);
   const [consorcioActualizar, setConsorcioActualizar] = useState({});
 
-    const { getConsorcios, consorcios, mensajeConsorcio, getConsorcioByID } = useConsorcio()
+    const { getConsorcios, consorcios, eliminarConsorcioByID, getConsorcioByID } = useConsorcio()
     const { saludar } = useGeneral();
 
     const consultarFetch = async () => {
@@ -58,19 +58,25 @@ const Consorcio = () => {
     const eliminarConsorcio = async (data) => {
         Swal.fire({
             title: 'Confirmación',
-            text: "Estas seguro de querer borrar este consorcio!",
+            text: `Estas seguro de querer borrar este consorcio ${data.nombre}!`,
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Si, borrarlo!'
-          }).then((result) => {
+          }).then( async(result) => {
             if (result.isConfirmed) {
-              Swal.fire(
-                'Borrado!',
-                'El consorcio ha sido borrado de forma correcta.',
-                'success'
-              )
+               const resultados = await eliminarConsorcioByID(data.idConsorcio);
+                console.log('ResulSwal: ', resultados);
+
+                if(resultados.success === true) {
+                    Swal.fire(
+                        'Borrado!',
+                        `${resultados.msg}!!`,
+                        'success'
+                      )
+                      consultarFetch();
+                }
             }
           })
     }
@@ -184,10 +190,6 @@ const Consorcio = () => {
                     </Grid>
                 </SimpleCard>
                 <ConsorcioRegistroModal open={open} setOpen={setOpen} consorcioActualizar={consorcioActualizar}/>
-
-                <Button
-                    onClick={() => Swal.fire('Notificacion','Se ha guardado de forma correcta', 'success')}
-                >Hola</Button>
             </div>
         </>
     )
