@@ -68,12 +68,18 @@ const Consorcio = () => {
           })
     }
     const columns = [
-        'nombre',
+        {
+            name: 'nombre',
+            label: 'Nombre',
+        },
         {
             name: 'creado_por',
             label: 'Creado Por',
         },
-        'slogan',
+        {
+            name: 'slogan',
+            label: 'Slogan',
+        },
         'telefono',
         'correo',
         {
@@ -81,10 +87,9 @@ const Consorcio = () => {
             options: {
                 customBodyRender: (value, tableMeta, updateValue) => {
                     if(value == 1) {
-                        return (<p>Activo</p>)
+                        return (<small className="border-radius-4 bg-primary text-white px-2 py-2px">Activo </small>)
                     } else {
-                        return (<p>Inactivo</p>)
-
+                        return (<small className="border-radius-4 bg-error text-white px-2 py-2px">Inactivo </small>)
                     }
                 }
             }

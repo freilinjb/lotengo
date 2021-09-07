@@ -39,6 +39,12 @@ export const navigations = [
                 iconText: '404',
                 path: '/usuario/admin',
             },
+            {
+                name: 'Horarios',
+                iconText: '404',
+                icon: 'security',
+                path: '/usuario/admin',
+            },
         ],
     },
     {
