@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { Breadcrumb, SimpleCard } from 'app/components'
-import { Grid, IconButton, Icon, Button } from '@material-ui/core'
+import { Grid, IconButton, Icon } from '@material-ui/core'
 import MUIDataTable from 'mui-datatables'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 import useConsorcio from 'app/hooks/useConsorcio';
 import useGeneral from 'app/hooks/useGeneral';
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from "@material-ui/core/Tooltip";
 import Swal from 'sweetalert2';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal'
 const Consorcio = () => {
   const [open, setOpen] = useState(false);
   const [consorcioActualizar, setConsorcioActualizar] = useState({});
 
-    const { getConsorcios, consorcios, eliminarConsorcioByID, getConsorcioByID } = useConsorcio()
+    const { getConsorcios, consorcios, eliminarConsorcioByID } = useConsorcio()
     const { saludar } = useGeneral();
 
     const consultarFetch = async () => {
@@ -36,20 +37,6 @@ const Consorcio = () => {
         setConsorcioActualizar(false);
         setOpen(true);
     }
-
-
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            '& > *': {
-                margin: theme.spacing(1),
-            },
-        },
-        extendedIcon: {
-            marginRight: theme.spacing(1),
-        },
-    }))
-
-    const classes = useStyles()
 
     useEffect(() => {
         console.log('Consorcios: ', consorcios)
@@ -84,7 +71,7 @@ const Consorcio = () => {
         'nombre',
         {
             name: 'creado_por',
-            headerName: 'Creadpo asdf',
+            label: 'Creado Por',
         },
         'slogan',
         'telefono',
@@ -113,7 +100,6 @@ const Consorcio = () => {
                         <>
                             <IconButton
                                 color="secondary"
-                                className={classes.button}
                                 aria-label="delete"
                                 onClick={() => eliminarConsorcio(consorcios[value])}
                             >
@@ -122,7 +108,6 @@ const Consorcio = () => {
 
                             <IconButton
                                 color="primary"
-                                className={classes.button}
                                 aria-label="edit"
                                 onClick={() => openModalActualizar(consorcios[value])}
                             >
@@ -138,11 +123,11 @@ const Consorcio = () => {
     const handleClick = (e) => {
         console.log('Hola', e)
     }
-
+    
     const CustomToolbar = () => (
       <Tooltip title={"Agregar nuevo consorcio"}>
-          <IconButton className={classes.iconButton} onClick={()  =>  openModalRegistrar()/*handleClick('freilin')*/}>
-            <AddIcon className={classes.deleteIcon} />
+          <IconButton  onClick={()  =>  openModalRegistrar()/*handleClick('freilin')*/}>
+            <AddIcon/>
           </IconButton>
         </Tooltip>
     );
@@ -180,12 +165,12 @@ const Consorcio = () => {
                     <Grid container spacing={3} className="py-5">
                         <Grid item style={{ height: 'auto', width: '100%' }}>
                             {/* <DataGrid rows={rows} columns={columns} /> */}
-                            <MUIDataTable
-                                title={'Consorcios'}
-                                data={consorcios}
-                                columns={columns}
-                                options={options}
-                            />
+                                <MUIDataTable
+                                    title={'Consorcios'}
+                                    data={consorcios}
+                                    columns={columns}
+                                    options={options}
+                                />
                         </Grid>
                     </Grid>
                 </SimpleCard>

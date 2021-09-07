@@ -45,7 +45,7 @@ export default function ConsorcioRegistroModal({
     setOpen,
     consorcioActualizar,
 }) {
-    const { saludar, registrarConsorcio, getConsorcios } =
+    const { actualizarConsorcio, registrarConsorcio, getConsorcios } =
         useConsorcio()
     const { getCiudades, ciudades } = useGeneral()
 
@@ -104,12 +104,12 @@ export default function ConsorcioRegistroModal({
         // return;
         let codigo = 0;
         if(state.idConsorcio > 0) {
-            alert('Actualizando');
-            return;
-            codigo = await registrarConsorcio(state);
+            // alert('Actualizando');
+            // return;
+            codigo = await actualizarConsorcio(state);
         } else {
-            alert('Registrando');
-            return;
+            // alert('Registrando');
+            // return;
             codigo = await registrarConsorcio(state);
         }
 

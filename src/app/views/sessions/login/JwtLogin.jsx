@@ -39,7 +39,7 @@ const JwtLogin = () => {
         password: '123456',
     })
     const [message, setMessage] = useState('')
-    const { login, iniciarSesion , mensajeUsuario} = useAuth()
+    const { iniciarSesion , mensajeUsuario} = useAuth()
 
     const classes = useStyles()
 

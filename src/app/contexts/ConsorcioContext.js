@@ -1,5 +1,4 @@
-import React, { createContext, useEffect, useReducer } from 'react'
-import axios from 'axios';
+import React, { createContext, useReducer } from 'react'
 import clienteAxios from '../config/axios';
 
 const reducer = (state, action) => {
@@ -26,7 +25,6 @@ const ConsorcioContext = createContext({
     notifications: [],
     consorcios: [],
     cargandoConsorcios: [],
-    mensajeConsorcio: '',
     mensajeConsorcio: '',
     // deleteNotification: () => {},
     // clearNotifications: () => {},
@@ -67,7 +65,7 @@ export const ConsorcioProvider = ({ settings, children }) => {
     const actualizarConsorcio = async (consorcio) => {
         console.log('consorcio: ', consorcio);
         // return;
-       return await clienteAxios.post('api/consorcio', {
+       return await clienteAxios.put('api/consorcio', {
             idConsorcio: consorcio.idConsorcio,
             nombre: consorcio.nombre,
             slogan: consorcio.slogan,

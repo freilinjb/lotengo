@@ -11,7 +11,7 @@ export const navigations = [
         type: 'label',
     },
     {
-        name: 'Configuración',
+        name: 'Mantenimientos',
         icon: 'security',
         children: [
             {
@@ -22,7 +22,7 @@ export const navigations = [
             {
                 name: 'Consorcios',
                 iconText: 'SU',
-                path: '/usuario/admin',
+                path: '/consorcio/admin',
             },
             {
                 name: 'Terminales',
