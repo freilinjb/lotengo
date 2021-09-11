@@ -13,6 +13,7 @@ import { AuthProvider } from 'app/contexts/JWTAuthContext'
 import { SettingsProvider } from 'app/contexts/SettingsContext'
 import { ConsorcioProvider } from 'app/contexts/ConsorcioContext';
 import { GeneralProvider } from 'app/contexts/GeneralContext';
+import { HorarioProvider } from 'app/contexts/HorarioContext';
 
 const App = () => {
     return (
@@ -27,6 +28,8 @@ const App = () => {
                                 <MatxSuspense>
                                     <ConsorcioProvider>
                                     <GeneralProvider>
+                                    <HorarioProvider>
+                                    
                                         <Switch>
                                             {/* AUTHENTICATION PAGES (SIGNIN, SIGNUP ETC.) */}
                                             {sessionRoutes.map((item, i) => (
@@ -42,6 +45,7 @@ const App = () => {
                                                 {/* RETURNS <Layout1/> component */}
                                             </AuthGuard>
                                         </Switch>
+                                    </HorarioProvider>
                                     </GeneralProvider>
                                     </ConsorcioProvider>
                                 </MatxSuspense>

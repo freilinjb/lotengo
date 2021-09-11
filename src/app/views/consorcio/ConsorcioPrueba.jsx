@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Breadcrumb, SimpleCard } from 'app/components'
 import { Grid, Button } from '@material-ui/core'
-import { DataGrid } from '@material-ui/data-grid';
+// import { DataGrid } from '@material-ui/data-grid';
 
 import MUIDataTable from 'mui-datatables';
 
@@ -82,25 +82,6 @@ const ConsorcioPrueba = () => {
             }
           },
           "hola"
-      ];
-
-      const handleClick =(e) => {
-          console.log('Hola', e);
-      }
-
-      const rows = [
-        {
-          id: 1,
-          date: new Date(1979, 0, 1),
-        },
-        {
-          id: 2,
-          date: new Date(1984, 1, 1),
-        },
-        {
-          id: 3,
-          date: new Date(1992, 2, 1),
-        },
       ];
 
       const [responsive, setResponsive] = useState("vertical");
