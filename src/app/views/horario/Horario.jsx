@@ -9,31 +9,31 @@ import AddIcon from '@material-ui/icons/Add';
 import Tooltip from "@material-ui/core/Tooltip";
 import Swal from 'sweetalert2';
 
-import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal';
+import HorarioFormularioModal from 'app/components/modal/formulario/HorarioFormularioModal';
 
 const Consorcio = () => {
   const [open, setOpen] = useState(false);
-  const [consorcioActualizar, setConsorcioActualizar] = useState({});
+  const [horarioActualizar, setHorarioActualizar] = useState({});
 
     const { getConsorcios, consorcios, eliminarConsorcioByID } = useConsorcio();
     const { saludar, getHorarios, horarios } = useHorario();
 
     const consultarFetch = async () => {
-        await getConsorcios();
+        await getHorarios();
     }
-    useEffect(() => {
+    useEffect( () => {
         saludar('Freilin Jose')
-        getHorarios();
+        // await getHorarios();
         consultarFetch();
     }, []);
 
-    const openModalActualizar = (consorcio) => {
-        setConsorcioActualizar(consorcio);
+    const openModalActualizar = (horario) => {
+        setHorarioActualizar(horario);
         setOpen(true);
     }
 
     const openModalRegistrar = () => {
-        setConsorcioActualizar(false);
+        setHorarioActualizar(false);
         setOpen(true);
     }
 
@@ -41,7 +41,7 @@ const Consorcio = () => {
         console.log('horarios: ', horarios)
     }, [horarios]);
 
-    const eliminarConsorcio = async (data) => {
+    const eliminarHorario = async (data) => {
         Swal.fire({
             title: 'Confirmación',
             text: `Estas seguro de querer borrar este consorcio ${data.nombre}!`,
@@ -67,6 +67,18 @@ const Consorcio = () => {
           })
     }
     const columns = [
+        {
+            name: '',
+            label: '#',
+            options:{ 
+                filter: false,
+                customBodyRender: (value, tableMeta, update) => {
+                    let rowIndex = Number(tableMeta.rowIndex)+1;
+                    return (<span>{rowIndex}</span>)
+                }
+            }
+
+        },
         {
             name: 'horario',
             label: 'Horario',
@@ -107,7 +119,7 @@ const Consorcio = () => {
                             <IconButton
                                 color="secondary"
                                 aria-label="delete"
-                                onClick={() => eliminarConsorcio(consorcios[value])}
+                                onClick={() => eliminarHorario(horarios[value])}
                             >
                                 <Icon>delete</Icon>
                             </IconButton>
@@ -115,7 +127,7 @@ const Consorcio = () => {
                             <IconButton
                                 color="primary"
                                 aria-label="edit"
-                                onClick={() => openModalActualizar(consorcios[value])}
+                                onClick={() => openModalActualizar(horarios[value])}
                             >
                                 <Icon>edit</Icon>
                             </IconButton>
@@ -175,7 +187,7 @@ const Consorcio = () => {
                         </Grid>
                     </Grid>
                 </SimpleCard>
-                <ConsorcioRegistroModal open={open} setOpen={setOpen} consorcioActualizar={consorcioActualizar}/>
+                <HorarioFormularioModal open={open} setOpen={setOpen} horarioActualizar={horarioActualizar}/>
             </div>
         </>
     )
