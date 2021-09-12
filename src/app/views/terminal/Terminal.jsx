@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { Breadcrumb, SimpleCard } from 'app/components'
-import { Grid, IconButton, Icon } from '@material-ui/core'
+import { Grid, IconButton, Icon, Avatar } from '@material-ui/core'
 import MUIDataTable from 'mui-datatables'
-import { makeStyles } from '@material-ui/core/styles';
 
-import useConsorcio from 'app/hooks/useConsorcio';
+import useTerminal from 'app/hooks/useTerminal';
 import useGeneral from 'app/hooks/useGeneral';
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from "@material-ui/core/Tooltip";
 import Swal from 'sweetalert2';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
-import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal'
+import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal';
 const Terminal = () => {
   const [open, setOpen] = useState(false);
   const [consorcioActualizar, setConsorcioActualizar] = useState({});
 
-    const { getConsorcios, consorcios, eliminarConsorcioByID } = useConsorcio()
+    const { getTerminales, terminales, eliminarTerminalByID } = useTerminal()
     const { saludar } = useGeneral();
 
     const consultarFetch = async () => {
-        await getConsorcios();
+        await getTerminales();
     }
     useEffect(() => {
         saludar('Freilin Jose')
@@ -39,8 +37,8 @@ const Terminal = () => {
     }
 
     useEffect(() => {
-        console.log('Consorcios: ', consorcios)
-    }, [consorcios]);
+        console.log('Consorcios: ', terminales)
+    }, [terminales]);
 
     const eliminarConsorcio = async (data) => {
         Swal.fire({
@@ -53,7 +51,7 @@ const Terminal = () => {
             confirmButtonText: 'Si, borrarlo!'
           }).then( async(result) => {
             if (result.isConfirmed) {
-               const resultados = await eliminarConsorcioByID(data.idConsorcio);
+               const resultados = await eliminarTerminalByID(data.idConsorcio);
                 console.log('ResulSwal: ', resultados);
 
                 if(resultados.success === true) {
@@ -67,18 +65,46 @@ const Terminal = () => {
             }
           })
     }
+    
     const columns = [
         {
+            name: '',
+            label: '#',
+            options: {
+                filter: false,
+                customBodyRender: (value, tableMeta, update) => {
+                    let rowIndex = Number(tableMeta.rowIndex)+1;
+                    return (<span>{rowIndex}</span>)
+                }
+            }
+        },
+        {
             name: 'nombre',
-            label: 'Nombre',
+            label: 'Terminal',
+            options: {
+                customBodyRender: (value, tableMeta, updateValue) => {
+                   console.log('TABLEMETA: ', terminales[tableMeta.rowIndex]);
+
+                   const urlLogo = terminales[tableMeta.rowIndex].urlLogo === '' ? '/assets/images/products/headphone-2.jpg' : terminales[tableMeta.rowIndex].urlLogo;
+                   
+                   return (
+                    <div className="flex items-center">
+                        <Avatar src={urlLogo} />
+                            <p className="m-0 ml-8">
+                                {value}
+                            </p>
+                    </div>
+                   )
+                }
+            }
         },
         {
-            name: 'creado_por',
-            label: 'Creado Por',
+            name: 'consorcio',
+            label: 'Consorcio',
         },
         {
-            name: 'slogan',
-            label: 'Slogan',
+            name: 'sector',
+            label: 'Sector',
         },
         'telefono',
         'correo',
@@ -86,7 +112,7 @@ const Terminal = () => {
             name: 'estado',
             options: {
                 customBodyRender: (value, tableMeta, updateValue) => {
-                    if(value == 1) {
+                    if(value == 'Activo') {
                         return (<small className="border-radius-4 bg-primary text-white px-2 py-2px">Activo </small>)
                     } else {
                         return (<small className="border-radius-4 bg-error text-white px-2 py-2px">Inactivo </small>)
@@ -103,31 +129,23 @@ const Terminal = () => {
                 customBodyRenderLite: (value, tableMeta, updateValue) => {
                     return (
                         <>
-                            <IconButton
-                                color="secondary"
-                                aria-label="delete"
-                                onClick={() => eliminarConsorcio(consorcios[value])}
-                            >
-                                <Icon>delete</Icon>
+                        <Tooltip title="Verificar detalle" placement="top">
+                            <IconButton>
+                                <Icon>view_headline</Icon>
                             </IconButton>
+                        </Tooltip>
 
-                            <IconButton
-                                color="primary"
-                                aria-label="edit"
-                                onClick={() => openModalActualizar(consorcios[value])}
-                            >
-                                <Icon>edit</Icon>
+                        <Tooltip title="Actualizar" placement="top">
+                            <IconButton>
+                                <Icon>arrow_right_alt</Icon>
                             </IconButton>
+                        </Tooltip>
                         </>
                     )
                 },
             },
         },
     ]
-
-    const handleClick = (e) => {
-        console.log('Hola', e)
-    }
     
     const CustomToolbar = () => (
       <Tooltip title={"Agregar nuevo consorcio"}>
@@ -172,7 +190,7 @@ const Terminal = () => {
                             {/* <DataGrid rows={rows} columns={columns} /> */}
                                 <MUIDataTable
                                     title={'Consorcios'}
-                                    data={consorcios}
+                                    data={terminales}
                                     columns={columns}
                                     options={options}
                                 />
