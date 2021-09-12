@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export default function ConsorcioRegistroModal({
+export default function TerminalRegistroModal({
     open,
     setOpen,
     consorcioActualizar,
@@ -58,8 +58,6 @@ export default function ConsorcioRegistroModal({
         nombre: '',
         slogan: '',
         mensajeCreacionJugada: '',
-        mensajeCancelacionJugada: '',
-        mensajeJugadaPremiada: '',
         correo: '',
         telefono: '',
         ciudad: '',
@@ -76,8 +74,6 @@ export default function ConsorcioRegistroModal({
                 nombre: consorcioActualizar.nombre,
                 slogan: consorcioActualizar.slogan,
                 mensajeCreacionJugada: consorcioActualizar.mensajeCreacionJugada,
-                mensajeCancelacionJugada: consorcioActualizar.mensajeCancelacionJugada,
-                mensajeJugadaPremiada: consorcioActualizar.mensajeJugadaPremiada,
                 correo: consorcioActualizar.correo,
                 telefono: consorcioActualizar.telefono,
                 sector: consorcioActualizar.nombre,
@@ -91,8 +87,6 @@ export default function ConsorcioRegistroModal({
                 nombre: '',
                 slogan: '',
                 mensajeCreacionJugada: '',
-                mensajeCancelacionJugada: '',
-                mensajeJugadaPremiada: '',
                 correo: '',
                 telefono: '',
                 ciudad: '',
@@ -237,49 +231,11 @@ export default function ConsorcioRegistroModal({
                                         <TextValidator
                                             required
                                             className="mb-4 w-full"
-                                            label="Mensaje de Creacion de la Jugada"
+                                            label="Slogan"
                                             onChange={handleChange}
                                             type="text"
                                             name="mensajeCreacionJugada"
                                             value={state.mensajeCreacionJugada || ''}
-                                            variant="outlined"
-                                            fullWidth
-                                            size="small"
-                                            validators={[
-                                                'required',
-                                            ]}
-                                            errorMessages={['this field is required']}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-
-                                        <TextValidator
-                                            required
-                                            className="mb-4 w-full"
-                                            label="Mensaje de anulacion de la jugada"
-                                            onChange={handleChange}
-                                            type="text"
-                                            name="mensajeCancelacionJugada"
-                                            value={state.mensajeCancelacionJugada || ''}
-                                            variant="outlined"
-                                            fullWidth
-                                            size="small"
-                                            validators={[
-                                                'required',
-                                            ]}
-                                            errorMessages={['this field is required']}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-
-                                        <TextValidator
-                                            required
-                                            className="mb-4 w-full"
-                                            label="Mensaje de jugada premiada"
-                                            onChange={handleChange}
-                                            type="text"
-                                            name="mensajeJugadaPremiada"
-                                            value={state.mensajeJugadaPremiada || ''}
                                             variant="outlined"
                                             fullWidth
                                             size="small"

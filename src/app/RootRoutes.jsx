@@ -15,6 +15,7 @@ import mapRoutes from './views/map/MapRoutes'
 import consorcioRoutes from './views/consorcio/ConsorcioRoutes';
 import usuarioRoutes from './views/usuario/UsuarioRoutes';
 import horarioRoutes from './views/horario/HorarioRoutes';
+import terminalRoutes from './views/terminal/TerminalRoutes';
 
 const redirectRoute = [
     {
@@ -37,6 +38,7 @@ const routes = [
     ...usuarioRoutes,
     ...consorcioRoutes,
     ...horarioRoutes,
+    ...terminalRoutes,
     ...chartsRoute,
     ...dragAndDropRoute,
     ...formsRoutes,

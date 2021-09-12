@@ -38,7 +38,7 @@ export const GeneralProvider = ({ settings, children }) => {
        return await clienteAxios.post('api/consorcio', {
             nombre: consorcio.nombre,
             slogan: consorcio.slogan,
-            mensajeTicket: consorcio.mensajeDespedida,
+            mensajeCreacionJugada: consorcio.mensajeDespedida,
             telefono: consorcio.telefono,
             correo: consorcio.correo,
             direccion: consorcio.direccion,

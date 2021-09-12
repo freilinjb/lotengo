@@ -25,9 +25,9 @@ export const navigations = [
                 path: '/consorcio/admin',
             },
             {
-                name: 'Terminales',
-                iconText: 'FP',
-                path: '/usuario/admin',
+                name: 'Terminal',
+                iconText: 'assign',
+                path: '/terminal',
             },
             {
                 name: 'Equipos',

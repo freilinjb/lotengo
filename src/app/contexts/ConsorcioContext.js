@@ -41,11 +41,13 @@ export const ConsorcioProvider = ({ settings, children }) => {
        return await clienteAxios.post('api/consorcio', {
             nombre: consorcio.nombre,
             slogan: consorcio.slogan,
-            mensajeTicket: consorcio.mensajeDespedida,
+            mensajeCreacionJugada: consorcio.mensajeCreacionJugada,
+            mensajeCancelacionJugada: consorcio.mensajeCancelacionJugada,
+            mensajeJugadaPremiada: consorcio.mensajeJugadaPremiada,
             telefono: consorcio.telefono,
             correo: consorcio.correo,
             direccion: consorcio.direccion,
-            status: consorcio.status,
+            status: Number(consorcio.status),
         }).then(async (response) => {
             if(response.status) {
                 dispatch({
@@ -69,11 +71,13 @@ export const ConsorcioProvider = ({ settings, children }) => {
             idConsorcio: consorcio.idConsorcio,
             nombre: consorcio.nombre,
             slogan: consorcio.slogan,
-            mensajeTicket: consorcio.mensajeDespedida,
+            mensajeCreacionJugada: consorcio.mensajeCreacionJugada,
+            mensajeCancelacionJugada: consorcio.mensajeCancelacionJugada,
+            mensajeJugadaPremiada: consorcio.mensajeJugadaPremiada,
             telefono: consorcio.telefono,
             correo: consorcio.correo,
             direccion: consorcio.direccion,
-            status: consorcio.status,
+            status: Number(consorcio.status),
         }).then(async (response) => {
             if(response.status) {
                 dispatch({

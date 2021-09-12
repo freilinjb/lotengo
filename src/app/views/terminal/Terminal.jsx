@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal'
-const Consorcio = () => {
+const Terminal = () => {
   const [open, setOpen] = useState(false);
   const [consorcioActualizar, setConsorcioActualizar] = useState({});
 
@@ -63,12 +63,6 @@ const Consorcio = () => {
                         'success'
                       )
                       consultarFetch();
-                } else {
-                    Swal.fire(
-                        'Borrado!',
-                        `${resultados.msg}!!`,
-                        'warning'
-                      )
                 }
             }
           })
@@ -191,4 +185,4 @@ const Consorcio = () => {
     )
 }
 
-export default Consorcio
+export default Terminal
