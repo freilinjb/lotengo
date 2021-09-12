@@ -89,17 +89,25 @@ export const HorarioProvider = ({ settings, children }) => {
     }
 
     const eliminarHorarioByID = async (idHorario) => {
-        console.log('eliminarIdC: ', idHorario)
+        console.log('horario: ', idHorario)
         return await clienteAxios
-            .delete(`api/horario/${idHorario}`, {})
-            .then(async (results) => {
-                console.log('Eliminar: ', results.data)
-                const datos = {
-                    msg: results.data.msg,
-                    success: results.data.success,
+            .delete(`api/horario/${idHorario}`)
+            .then(async (response) => {
+                const data = { success: null, msg: null }
+                data.msg = response.data.msg
+                data.success = response.data.success
+                if (response.status) {
+                    dispatch({
+                        type: 'MENSAJE',
+                        payload: 'Se ha actualizado de forma correcta!!',
+                    });
                 }
-                console.log('data despues: ', datos)
-                return datos
+                console.log('pruebaEnvio de datosL: ', data);
+                return data;
+            })
+            .catch((error) => {
+                console.log('Error: ', error)
+                return 500
             })
     }
 

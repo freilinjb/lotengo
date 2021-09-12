@@ -15,8 +15,8 @@ const Consorcio = () => {
   const [open, setOpen] = useState(false);
   const [horarioActualizar, setHorarioActualizar] = useState({});
 
-    const { getConsorcios, consorcios, eliminarConsorcioByID } = useConsorcio();
-    const { saludar, getHorarios, horarios } = useHorario();
+    const { eliminarConsorcioByID } = useConsorcio();
+    const { saludar, getHorarios, horarios, eliminarHorarioByID } = useHorario();
 
     const consultarFetch = async () => {
         await getHorarios();
@@ -42,9 +42,12 @@ const Consorcio = () => {
     }, [horarios]);
 
     const eliminarHorario = async (data) => {
+        console.log('dataEliminar:', data);
+        const idHorario = data.idHorario;
+        // return;
         Swal.fire({
             title: 'Confirmación',
-            text: `Estas seguro de querer borrar este consorcio ${data.nombre}!`,
+            text: `Estas seguro de querer borrar este horario ${data.horario}!`,
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -52,17 +55,29 @@ const Consorcio = () => {
             confirmButtonText: 'Si, borrarlo!'
           }).then( async(result) => {
             if (result.isConfirmed) {
-               const resultados = await eliminarConsorcioByID(data.idConsorcio);
-                console.log('ResulSwal: ', resultados);
+                console.log('Data confirmacion: ', idHorario);
+            //    const resultados = await eliminarHorarioByID(data.idConsorcio);
+            //     console.log('ResulSwal: ', resultados);
 
-                if(resultados.success === true) {
-                    Swal.fire(
-                        'Borrado!',
-                        `${resultados.msg}!!`,
-                        'success'
-                      )
-                      consultarFetch();
-                }
+            //     if(resultados.success === true) {
+            //         Swal.fire(
+            //             'Borrado!',
+            //             `${resultados.msg}!!`,
+            //             'success'
+            //           )
+            //           consultarFetch();
+            //     }
+
+                let data = await eliminarHorarioByID(idHorario)
+                console.log('DataSADFASDF: ', data);
+                
+                Swal.fire('Good job!', `${data.msg}!`, `${data.success ? "success" : "error"}`).then(
+                    (result) => {
+                        if (result.isConfirmed) {
+                            consultarFetch();
+                        }
+                    }
+                )
             }
           })
     }
