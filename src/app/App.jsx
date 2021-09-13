@@ -14,6 +14,7 @@ import { SettingsProvider } from 'app/contexts/SettingsContext'
 import { ConsorcioProvider } from 'app/contexts/ConsorcioContext';
 import { GeneralProvider } from 'app/contexts/GeneralContext';
 import { HorarioProvider } from 'app/contexts/HorarioContext';
+import { TerminalProvider } from 'app/contexts/TerminalContext';
 
 const App = () => {
     return (
@@ -29,7 +30,7 @@ const App = () => {
                                     <ConsorcioProvider>
                                     <GeneralProvider>
                                     <HorarioProvider>
-                                    
+                                    <TerminalProvider>
                                         <Switch>
                                             {/* AUTHENTICATION PAGES (SIGNIN, SIGNUP ETC.) */}
                                             {sessionRoutes.map((item, i) => (
@@ -45,6 +46,7 @@ const App = () => {
                                                 {/* RETURNS <Layout1/> component */}
                                             </AuthGuard>
                                         </Switch>
+                                    </TerminalProvider>
                                     </HorarioProvider>
                                     </GeneralProvider>
                                     </ConsorcioProvider>

@@ -2,8 +2,11 @@ import React from 'react';
 
 const TerminalRoutes = [
     {
-        path: '/terminal',
+        path: '/terminal/admin',
         component: React.lazy(() => import('./Terminal')),
+    },{
+        path: '/terminal/add',
+        component: React.lazy(() => import('./TerminalRegistro')),
     },
 ]
 

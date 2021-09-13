@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import { Grid, IconButton, Icon } from '@material-ui/core';
+import { Grid, IconButton, Icon, Tooltip } from '@material-ui/core';
 import MUIDataTable from 'mui-datatables';
 
 import useConsorcio from 'app/hooks/useConsorcio';
 import useHorario from 'app/hooks/useHorario';
 import AddIcon from '@material-ui/icons/Add';
-import Tooltip from "@material-ui/core/Tooltip";
 import Swal from 'sweetalert2';
 
 import HorarioFormularioModal from 'app/components/modal/formulario/HorarioFormularioModal';
@@ -56,17 +55,6 @@ const Consorcio = () => {
           }).then( async(result) => {
             if (result.isConfirmed) {
                 console.log('Data confirmacion: ', idHorario);
-            //    const resultados = await eliminarHorarioByID(data.idConsorcio);
-            //     console.log('ResulSwal: ', resultados);
-
-            //     if(resultados.success === true) {
-            //         Swal.fire(
-            //             'Borrado!',
-            //             `${resultados.msg}!!`,
-            //             'success'
-            //           )
-            //           consultarFetch();
-            //     }
 
                 let data = await eliminarHorarioByID(idHorario)
                 console.log('DataSADFASDF: ', data);
@@ -92,7 +80,6 @@ const Consorcio = () => {
                     return (<span>{rowIndex}</span>)
                 }
             }
-
         },
         {
             name: 'horario',

@@ -27,7 +27,7 @@ export const navigations = [
             {
                 name: 'Terminal',
                 iconText: 'assign',
-                path: '/terminal',
+                path: '/terminal/admin',
             },
             {
                 name: 'Equipos',

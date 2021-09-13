@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Breadcrumb, SimpleCard } from 'app/components'
-import { Grid, IconButton, Icon, Avatar } from '@material-ui/core'
+import { Grid, IconButton, Icon, Avatar, Link } from '@material-ui/core'
 import MUIDataTable from 'mui-datatables'
 
 import useTerminal from 'app/hooks/useTerminal';
@@ -10,7 +10,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Swal from 'sweetalert2';
 
 import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal';
+
+import { useHistory } from 'react-router-dom';
 const Terminal = () => {
+    let history = useHistory();
+
   const [open, setOpen] = useState(false);
   const [consorcioActualizar, setConsorcioActualizar] = useState({});
 
@@ -130,13 +134,18 @@ const Terminal = () => {
                     return (
                         <>
                         <Tooltip title="Verificar detalle" placement="top">
-                            <IconButton>
-                                <Icon>view_headline</Icon>
-                            </IconButton>
+                                <IconButton
+                                    onClick={() => history.push('add')}
+                                >
+                                    <Icon>view_headline</Icon>
+                                </IconButton>
                         </Tooltip>
 
                         <Tooltip title="Actualizar" placement="top">
-                            <IconButton>
+                            
+                            <IconButton
+                                onClick={() => history.push('add')}
+                            >
                                 <Icon>arrow_right_alt</Icon>
                             </IconButton>
                         </Tooltip>
@@ -149,9 +158,11 @@ const Terminal = () => {
     
     const CustomToolbar = () => (
       <Tooltip title={"Agregar nuevo consorcio"}>
-          <IconButton  onClick={()  =>  openModalRegistrar()/*handleClick('freilin')*/}>
-            <AddIcon/>
-          </IconButton>
+            <IconButton 
+                onClick={() => history.push('add')}
+            >
+                <AddIcon/>
+            </IconButton>
         </Tooltip>
     );
 
