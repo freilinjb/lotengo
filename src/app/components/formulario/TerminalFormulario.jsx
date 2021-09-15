@@ -8,13 +8,18 @@ import {
     RadioGroup,
     FormControlLabel,
     Checkbox,
-} from '@material-ui/core'
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
-} from '@material-ui/pickers'
-import 'date-fns'
-import DateFnsUtils from '@date-io/date-fns'
+} from '@material-ui/pickers';
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
 
 const SimpleForm = () => {
     const [state, setState] = useState({
@@ -60,7 +65,23 @@ const SimpleForm = () => {
         gender,
         date,
         email,
-    } = state
+    } = state;
+
+    const useStyles = makeStyles((theme) => ({
+        formControl: {
+          margin: theme.spacing(1),
+          minWidth: 120,
+        },
+        selectEmpty: {
+          marginTop: theme.spacing(2),
+        },
+      }));
+
+    const classes = useStyles();
+  const [age, setAge] = React.useState('');
+
+
+
 
     return (
         <div>
@@ -74,6 +95,9 @@ const SimpleForm = () => {
                             type="text"
                             name="username"
                             value={username || ''}
+                            variant="outlined"
+                            fullWidth
+                            size="small"
                             validators={[
                                 'required',
                                 'minStringLength: 4',
@@ -87,6 +111,9 @@ const SimpleForm = () => {
                             onChange={handleChange}
                             type="text"
                             name="firstName"
+                            variant="outlined"
+                            fullWidth
+                            size="small"
                             value={firstName || ''}
                             validators={['required']}
                             errorMessages={['this field is required']}
@@ -98,6 +125,9 @@ const SimpleForm = () => {
                             type="email"
                             name="email"
                             value={email || ''}
+                            variant="outlined"
+                            fullWidth
+                            size="small"
                             validators={['required', 'isEmail']}
                             errorMessages={[
                                 'this field is required',
@@ -135,6 +165,29 @@ const SimpleForm = () => {
                             ]}
                             errorMessages={['this field is required']}
                         />
+
+                    <FormControl variant="outlined"
+                        fullWidth
+                        size="small"
+                        style={{marginBottom: '15px'}}
+                    >
+                            <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={age}
+                            name="age"
+                            onChange={handleChange}
+                            label="Age"
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
 
                     <Grid item lg={6} md={6} sm={12} xs={12}>

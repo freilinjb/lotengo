@@ -5,9 +5,10 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
 import { ValidatorForm, TextValidator, SelectValidator } from 'react-material-ui-form-validator'
 import { Autocomplete, createFilterOptions } from '@material-ui/lab'
-import useConsorcio from 'app/hooks/useConsorcio'
-import useGeneral from 'app/hooks/useGeneral'
-import Swal from 'sweetalert2'
+import useConsorcio from 'app/hooks/useConsorcio';
+import useTerminal from 'app/hooks/useTerminal';
+import useGeneral from 'app/hooks/useGeneral';
+import Swal from 'sweetalert2';
 
 import {
     Button,
@@ -21,6 +22,11 @@ import {
     CardContent,
     CardMedia,
     Paper,
+    FormControl,
+    Select,
+    FormHelperText,
+    InputLabel,
+    MenuItem,
     Avatar,
 } from '@material-ui/core'
 import 'date-fns'
@@ -43,15 +49,15 @@ const useStyles = makeStyles((theme) => ({
 export default function TerminalRegistroModal({
     open,
     setOpen,
-    consorcioActualizar,
+    terminalActualizar,
 }) {
-    const { actualizarConsorcio, registrarConsorcio, getConsorcios } =
-        useConsorcio()
+    const { actualizarTerminar, registrarTerminal, getTerminales } = useConsorcio();
+    const {  } = useTerminal();
     const { getCiudades, ciudades } = useGeneral()
-
+    const [age, setAge] = React.useState('');
     useEffect(() => {
-        getCiudades()
-    }, [])
+        getCiudades();
+    }, []);
 
     const [state, setState] = useState({
         idConsorcio: 0,
@@ -64,22 +70,23 @@ export default function TerminalRegistroModal({
         sector: '',
         direccion: '',
         status: '1',
-    })
+    });
+
     useEffect(() => {
-        if (Object.keys(consorcioActualizar).length !== 0) {
-            console.log('actualizando: ', consorcioActualizar)
+        if (Object.keys(terminalActualizar).length !== 0) {
+            console.log('actualizando: ', terminalActualizar)
             setState({
                 ...state,
-                idConsorcio: consorcioActualizar.idConsorcio,
-                nombre: consorcioActualizar.nombre,
-                slogan: consorcioActualizar.slogan,
-                mensajeCreacionJugada: consorcioActualizar.mensajeCreacionJugada,
-                correo: consorcioActualizar.correo,
-                telefono: consorcioActualizar.telefono,
-                sector: consorcioActualizar.nombre,
-                direccion: consorcioActualizar.nombre,
-                status: consorcioActualizar.estado.toString(),
-            })
+                idConsorcio: terminalActualizar.idConsorcio,
+                nombre: terminalActualizar.nombre,
+                slogan: terminalActualizar.slogan,
+                mensajeCreacionJugada: terminalActualizar.mensajeCreacionJugada,
+                correo: terminalActualizar.correo,
+                telefono: terminalActualizar.telefono,
+                sector: terminalActualizar.nombre,
+                direccion: terminalActualizar.nombre,
+                status: terminalActualizar.estado.toString(),
+            });
         } else {
             setState({
                 ...state,
@@ -93,33 +100,29 @@ export default function TerminalRegistroModal({
                 sector: '',
                 direccion: '',
                 status: '1',
-            })
-            console.log('registrando: ', consorcioActualizar)
+            });
+            console.log('registrando: ', terminalActualizar);
         }
-    }, [consorcioActualizar])
+    }, [terminalActualizar]);
 
     const handleSubmit = async (event) => {
         // event.preventDefault()
         // console.log('ejecutando metodo submit');
         // return;
         let codigo = 0;
-        if(state.idConsorcio > 0) {
-            // alert('Actualizando');
-            // return;
-            codigo = await actualizarConsorcio(state);
+        if(state.idTerminal > 0) {
+            codigo = await actualizarTerminar(state);
         } else {
-            // alert('Registrando');
-            // return;
-            codigo = await registrarConsorcio(state);
+            codigo = await registrarTerminal(state);
         }
 
-        console.log('codigo: ', codigo)
+        console.log('codigo: ', codigo);
         if (codigo === 200) {
             Swal.fire('Good job!', 'You clicked the button!', 'success').then(
                 (result) => {
                     if (result.isConfirmed) {
                         setOpen(false)
-                        getConsorcios()
+                        getTerminales()
                     }
                 }
             )
@@ -175,7 +178,7 @@ export default function TerminalRegistroModal({
                                                     }}
                                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs03_SqIWGSw_H6T1YJCvhn1zR3oAsL41JHuE69BCCLsxFKHP1PdpMcqPc9A9kYdWpsFU&usqp=CAU"
                                                 />
-                                                Registro de Consorcio
+                                                Registro de Terminal
                             </Grid>
                         
                         </h2>
@@ -190,6 +193,19 @@ export default function TerminalRegistroModal({
                                 
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
+                                    <FormControl className={classes.formControl}>
+                                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={age}
+                                        onChange={handleChange}
+                                        >
+                                        <MenuItem value={10}>Ten</MenuItem>
+                                        <MenuItem value={20}>Twenty</MenuItem>
+                                        <MenuItem value={30}>Thirty</MenuItem>
+                                        </Select>
+                                    </FormControl>
 
                                         <TextValidator
                                             required
