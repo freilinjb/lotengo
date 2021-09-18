@@ -1,135 +1,192 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Breadcrumb, SimpleCard } from 'app/components'
-import { Grid } from '@material-ui/core'
+import { Grid, IconButton, Icon } from '@material-ui/core'
+import MUIDataTable from 'mui-datatables'
 
+import useConsorcio from 'app/hooks/useConsorcio';
+import useGeneral from 'app/hooks/useGeneral';
+import AddIcon from '@material-ui/icons/Add'
+import Tooltip from "@material-ui/core/Tooltip";
+import Swal from 'sweetalert2';
+
+import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal'
 const Usuario = () => {
-    const bgClassList = [
+  const [open, setOpen] = useState(false);
+  const [consorcioActualizar, setConsorcioActualizar] = useState({});
+
+    const { getConsorcios, consorcios, eliminarConsorcioByID } = useConsorcio()
+    const { saludar } = useGeneral();
+
+    const consultarFetch = async () => {
+        await getConsorcios();
+    }
+    useEffect(() => {
+        saludar('Freilin Jose')
+        consultarFetch();
+    }, []);
+
+    const openModalActualizar = (consorcio) => {
+        setConsorcioActualizar(consorcio);
+
+        setOpen(true);
+    }
+
+    const openModalRegistrar = () => {
+        setConsorcioActualizar(false);
+        setOpen(true);
+    }
+
+    useEffect(() => {
+        console.log('Consorcios: ', consorcios)
+    }, [consorcios]);
+
+    const eliminarConsorcio = async (data) => {
+        Swal.fire({
+            title: 'Confirmación',
+            text: `Estas seguro de querer borrar el usuario ${data.nombre}!`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, borrarlo!'
+          }).then( async(result) => {
+            if (result.isConfirmed) {
+               const resultados = await eliminarConsorcioByID(data.idConsorcio);
+                console.log('ResulSwal: ', resultados);
+
+                if(resultados.success === true) {
+                    Swal.fire(
+                        'Borrado!',
+                        `${resultados.msg}!!`,
+                        'success'
+                      )
+                      consultarFetch();
+                } else {
+                    Swal.fire(
+                        'Borrado!',
+                        `${resultados.msg}!!`,
+                        'warning'
+                      )
+                }
+            }
+          })
+    }
+    const columns = [
         {
-            bgClass: 'bg-primary',
-            textClass: 'text-white',
+            name: 'nombre',
+            label: 'Nombre',
         },
         {
-            bgClass: 'bg-secondary',
-            textClass: 'text-white',
+            name: 'creado_por',
+            label: 'Creado Por',
         },
         {
-            bgClass: 'bg-green',
-            textClass: 'text-white',
+            name: 'slogan',
+            label: 'Slogan',
+        },
+        'telefono',
+        'correo',
+        {
+            name: 'estado',
+            options: {
+                customBodyRender: (value, tableMeta, updateValue) => {
+                    if(value == 1) {
+                        return (<small className="border-radius-4 bg-primary text-white px-2 py-2px">Activo </small>)
+                    } else {
+                        return (<small className="border-radius-4 bg-error text-white px-2 py-2px">Inactivo </small>)
+                    }
+                }
+            }
         },
         {
-            bgClass: 'bg-error',
-            textClass: 'text-white',
-        },
-        {
-            bgClass: 'bg-dark',
-            textClass: 'text-white',
-        },
-        {
-            bgClass: 'bg-light-dark',
-            textClass: 'text-white',
-        },
-        {
-            bgClass: 'bg-light-green',
-        },
-        {
-            bgClass: 'bg-light-error',
-        },
-        {
-            bgClass: 'bg-light-primary',
-        },
-        {
-            bgClass: 'bg-light-gray',
-        },
-        {
-            bgClass: 'bg-default',
-        },
-        {
-            bgClass: 'bg-paper',
-        },
-        {
-            bgClass: 'bg-white',
+            name: 'Acción',
+            options: {
+                filter: false,
+                sort: false,
+                empty: true,
+                customBodyRenderLite: (value, tableMeta, updateValue) => {
+                    return (
+                        <>
+                            <IconButton
+                                color="secondary"
+                                aria-label="delete"
+                                onClick={() => eliminarConsorcio(consorcios[value])}
+                            >
+                                <Icon>delete</Icon>
+                            </IconButton>
+
+                            <IconButton
+                                color="primary"
+                                aria-label="edit"
+                                onClick={() => openModalActualizar(consorcios[value])}
+                            >
+                                <Icon>edit</Icon>
+                            </IconButton>
+                        </>
+                    )
+                },
+            },
         },
     ]
 
-    const textClassList = [
-        {
-            textClass: 'text-brand',
-        },
-        {
-            textClass: 'text-primary',
-        },
-        {
-            textClass: 'text-secondary',
-        },
-        {
-            textClass: 'text-green',
-        },
-        {
-            textClass: 'text-error',
-        },
-        {
-            textClass: 'text-gray',
-        },
-        {
-            textClass: 'text-muted',
-        },
-        {
-            textClass: 'text-light-white',
-            bgClass: 'bg-secondary',
-        },
-        {
-            textClass: 'text-muted-white',
-            bgClass: 'bg-secondary  ',
-        },
-        {
-            textClass: 'text-white',
-            bgClass: 'bg-primary',
-        },
-    ]
+    const handleClick = (e) => {
+        console.log('Hola', e)
+    }
+    
+    const CustomToolbar = () => (
+      <Tooltip title={"Agregar nuevo consorcio"}>
+          <IconButton  onClick={()  =>  openModalRegistrar()/*handleClick('freilin')*/}>
+            <AddIcon/>
+          </IconButton>
+        </Tooltip>
+    );
 
+    const options = {
+        filter: true,
+        // filterType: "dropdown",
+        selectableRowsHideCheckboxes: false,
+        download: false,
+        viewColumns: false,
+        responsive: 'vertical',
+        selectableRows: false,
+        // print: false,
+        tableBodyHeight: '400px',
+        customToolbar: () => {
+          return (
+            <CustomToolbar />
+          );
+        }
+        // tableBodyMaxHeight
+    }
     return (
-        <div className="m-sm-30">
-            <div className="mb-sm-30">
-                <Breadcrumb
-                    routeSegments={[
-                        { name: 'usuario', path: '/usuario' },
-                        { name: 'Administración' },
-                    ]}
-                />
+        <>
+            <div className="m-sm-30">
+                <div className="mb-sm-30">
+                    <Breadcrumb
+                        routeSegments={[
+                            { name: 'usuario', path: '/usuario/admin' },
+                            { name: 'Administración' },
+                        ]}
+                    />
+                </div>
+                <SimpleCard title="Administracion de Usuarios">
+                
+                    <Grid container spacing={3} className="py-5">
+                        <Grid item style={{ height: 'auto', width: '100%' }}>
+                            {/* <DataGrid rows={rows} columns={columns} /> */}
+                                <MUIDataTable
+                                    title={'Usuarios'}
+                                    data={consorcios}
+                                    columns={columns}
+                                    options={options}
+                                />
+                        </Grid>
+                    </Grid>
+                </SimpleCard>
+                <ConsorcioRegistroModal open={open} setOpen={setOpen} consorcioActualizar={consorcioActualizar}/>
             </div>
-            <SimpleCard title="Background Color Class">
-                <Grid container spacing={3}>
-                    {bgClassList.map((bg, ind) => (
-                        <Grid item key={ind}>
-                            <div
-                                className={`h-132 w-132 border-radius-8 elevation-z6 ${bg.bgClass} flex justify-center items-center`}
-                            >
-                                <span className={`${bg.textClass}`}>
-                                    .{bg.bgClass}
-                                </span>
-                            </div>
-                        </Grid>
-                    ))}
-                </Grid>
-            </SimpleCard>
-            <div className="py-3" />
-            <SimpleCard title="Text Color Class">
-                <Grid container spacing={3}>
-                    {textClassList.map((bg, ind) => (
-                        <Grid item key={ind}>
-                            <div
-                                className={`h-132 w-132 border-radius-8 elevation-z6 ${bg.bgClass} flex justify-center items-center`}
-                            >
-                                <span className={`${bg.textClass}`}>
-                                    .{bg.textClass}
-                                </span>
-                            </div>
-                        </Grid>
-                    ))}
-                </Grid>
-            </SimpleCard>
-        </div>
+        </>
     )
 }
 
-export default Usuario
+export default Usuario;

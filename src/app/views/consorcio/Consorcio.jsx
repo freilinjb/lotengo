@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Breadcrumb, SimpleCard } from 'app/components'
 import { Grid, IconButton, Icon } from '@material-ui/core'
 import MUIDataTable from 'mui-datatables'
-import { makeStyles } from '@material-ui/core/styles';
 
 import useConsorcio from 'app/hooks/useConsorcio';
 import useGeneral from 'app/hooks/useGeneral';
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from "@material-ui/core/Tooltip";
 import Swal from 'sweetalert2';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal'
 const Consorcio = () => {

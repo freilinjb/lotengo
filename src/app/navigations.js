@@ -17,7 +17,7 @@ export const navigations = [
             {
                 name: 'Usuarios',
                 iconText: 'SI',
-                path: '/session/signin',
+                path: '/usuario/admin',
             },
             {
                 name: 'Consorcios',

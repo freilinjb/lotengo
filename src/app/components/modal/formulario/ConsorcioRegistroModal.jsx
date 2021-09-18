@@ -6,9 +6,7 @@ import Fade from '@material-ui/core/Fade'
 import {
     ValidatorForm,
     TextValidator,
-    SelectValidator,
 } from 'react-material-ui-form-validator'
-import { Autocomplete, createFilterOptions } from '@material-ui/lab'
 import useConsorcio from 'app/hooks/useConsorcio'
 import useGeneral from 'app/hooks/useGeneral'
 import Swal from 'sweetalert2'
@@ -20,11 +18,6 @@ import {
     Radio,
     RadioGroup,
     FormControlLabel,
-    TextField,
-    Card,
-    CardContent,
-    CardMedia,
-    Paper,
     Avatar,
 } from '@material-ui/core'
 import 'date-fns'
@@ -148,15 +141,7 @@ export default function ConsorcioRegistroModal({
         })
     }
 
-    const handleDateChange = (date) => {
-        setState({ ...state, date })
-    }
-
     const classes = useStyles()
-
-    const handleOpen = () => {
-        setOpen(true)
-    }
 
     const handleClose = () => {
         setOpen(false)
