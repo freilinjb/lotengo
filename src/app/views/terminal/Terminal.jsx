@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import TerminalRegistroModal from 'app/components/modal/formulario/TerminalRegistroModal';
 
 import { useHistory } from 'react-router-dom';
+// import getMac, {isMac} from 'getmac';
 const Terminal = () => {
     let history = useHistory();
 
@@ -38,6 +39,11 @@ const Terminal = () => {
     const openModalRegistrar = () => {
         setTerminalActualizar(false);
         setOpen(true);
+    }
+
+    const prueba = () => {
+        // console.log('getMac: ', getMac.part);
+        
     }
 
     useEffect(() => {
@@ -214,6 +220,9 @@ const Terminal = () => {
                         </Grid>
                     </Grid>
                 </SimpleCard>
+                <button
+                    onClick={() => prueba()}
+                >Hola Mundo</button>
                 <TerminalRegistroModal open={open} setOpen={setOpen} terminalActualizar={terminalActualizar}/>
             </div>
         </>

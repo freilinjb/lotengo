@@ -65,6 +65,7 @@ const SimpleForm = () => {
         gender,
         date,
         email,
+        consorcio
     } = state;
 
     const useStyles = makeStyles((theme) => ({
@@ -90,7 +91,7 @@ const SimpleForm = () => {
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                         <TextValidator
                             className="mb-4 w-full"
-                            label="Username (Min length 4, Max length 9)"
+                            label="Nombre"
                             onChange={handleChange}
                             type="text"
                             name="username"
@@ -101,16 +102,39 @@ const SimpleForm = () => {
                             validators={[
                                 'required',
                                 'minStringLength: 4',
-                                'maxStringLength: 9',
+                                'maxStringLength: 20',
                             ]}
-                            errorMessages={['this field is required']}
+                            errorMessages={['Este campo es obligatorio','El minimo es 4 caracteres','El maximo es de 20 caracteres']}
                         />
+                        <FormControl variant="outlined"
+                                fullWidth
+                                size="small"
+                                style={{marginBottom: '15px'}}
+                            >
+                            <InputLabel id="consorcioLabel">Consorcio</InputLabel>
+                            <Select
+                            labelId="consorcioLabel"
+                            id="consorcio"
+                            value={consorcio}
+                            name="consorcio"
+                            onChange={handleChange}
+                            label="Consorcio"
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
+
                         <TextValidator
                             className="mb-4 w-full"
-                            label="First Name"
+                            label="Telefono"
                             onChange={handleChange}
                             type="text"
-                            name="firstName"
+                            name="telefono"
                             variant="outlined"
                             fullWidth
                             size="small"
@@ -120,10 +144,10 @@ const SimpleForm = () => {
                         />
                         <TextValidator
                             className="mb-4 w-full"
-                            label="Email"
+                            label="Correo"
                             onChange={handleChange}
-                            type="email"
-                            name="email"
+                            type="correo"
+                            name="correo"
                             value={email || ''}
                             variant="outlined"
                             fullWidth
@@ -134,51 +158,22 @@ const SimpleForm = () => {
                                 'email is not valid',
                             ]}
                         />
+                    </Grid>
 
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                                className="mb-4 w-full"
-                                margin="none"
-                                id="mui-pickers-date"
-                                label="Date picker"
-                                inputVariant="standard"
-                                type="text"
-                                autoOk={true}
-                                value={date}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            />
-                        </MuiPickersUtilsProvider>
-                        <TextValidator
-                            className="mb-8 w-full"
-                            label="Credit Card"
-                            onChange={handleChange}
-                            type="number"
-                            name="creditCard"
-                            value={creditCard || ''}
-                            validators={[
-                                'required',
-                                'minStringLength:16',
-                                'maxStringLength: 16',
-                            ]}
-                            errorMessages={['this field is required']}
-                        />
-
-                    <FormControl variant="outlined"
-                        fullWidth
-                        size="small"
-                        style={{marginBottom: '15px'}}
-                    >
-                            <InputLabel id="demo-simple-select-outlined-label">Age</InputLabel>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <FormControl variant="outlined"
+                                fullWidth
+                                size="small"
+                                style={{marginBottom: '15px'}}
+                            >
+                            <InputLabel id="consorcioLabel">Pais</InputLabel>
                             <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={age}
-                            name="age"
+                            labelId="consorcioLabel"
+                            id="consorcio"
+                            value={consorcio}
+                            name="consorcio"
                             onChange={handleChange}
-                            label="Age"
+                            label="Consorcio"
                             >
                             <MenuItem value="">
                                 <em>None</em>
@@ -188,41 +183,86 @@ const SimpleForm = () => {
                             <MenuItem value={30}>Thirty</MenuItem>
                             </Select>
                         </FormControl>
-                    </Grid>
 
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <FormControl variant="outlined"
+                                fullWidth
+                                size="small"
+                                style={{marginBottom: '15px'}}
+                            >
+                            <InputLabel id="consorcioLabel">Ciudad</InputLabel>
+                            <Select
+                            labelId="consorcioLabel"
+                            id="consorcio"
+                            value={consorcio}
+                            name="consorcio"
+                            onChange={handleChange}
+                            label="Consorcio"
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <FormControl variant="outlined"
+                                fullWidth
+                                size="small"
+                                style={{marginBottom: '15px'}}
+                            >
+                            <InputLabel id="sectorLabel">Sector</InputLabel>
+                            <Select
+                            labelId="sectorLabel"
+                            id="sector"
+                            value={consorcio}
+                            name="sector"
+                            onChange={handleChange}
+                            label="sector"
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
                         <TextValidator
                             className="mb-4 w-full"
-                            label="Mobile Nubmer"
+                            label="Dirección"
                             onChange={handleChange}
                             type="text"
-                            name="mobile"
-                            value={mobile || ''}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
-                        />
-                        <TextValidator
-                            className="mb-4 w-full"
-                            label="Password"
-                            onChange={handleChange}
-                            name="password"
-                            type="password"
-                            value={password || ''}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
-                        />
-                        <TextValidator
-                            className="mb-4 w-full"
-                            label="Confirm Password"
-                            onChange={handleChange}
-                            name="confirmPassword"
-                            type="password"
-                            value={confirmPassword || ''}
-                            validators={['required', 'isPasswordMatch']}
-                            errorMessages={[
-                                'this field is required',
-                                "password didn't match",
+                            name="direccion"
+                            value={username || ''}
+                            variant="outlined"
+                            fullWidth
+                            size="small"
+                            validators={[
+                                'required',
+                                'minStringLength: 4',
                             ]}
+                            errorMessages={['Este campo es obligatorio','El minimo es 4 caracteres']}
+                        />
+                    </Grid>
+                </Grid>
+                <Grid item lg={12} md={12} sm={12} xs={12}>
+                        <TextValidator
+                            className="mb-4 w-full"
+                            label="Observación"
+                            onChange={handleChange}
+                            type="text"
+                            name="observacion"
+                            value={username || ''}
+                            variant="outlined"
+                            fullWidth
+                            size="small"
+                        />
+
+                        <FormControlLabel
+                            control={<Checkbox />}
+                            label="Utilizar un presupuesto separado del consorcio."
                         />
                         <RadioGroup
                             className="mb-4"
@@ -234,28 +274,18 @@ const SimpleForm = () => {
                             <FormControlLabel
                                 value="Male"
                                 control={<Radio color="secondary" />}
-                                label="Male"
+                                label="Activo"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
                                 value="Female"
                                 control={<Radio color="secondary" />}
-                                label="Female"
+                                label="Inactivo"
                                 labelPlacement="end"
                             />
-                            <FormControlLabel
-                                value="Others"
-                                control={<Radio color="secondary" />}
-                                label="Others"
-                                labelPlacement="end"
-                            />
+
                         </RadioGroup>
-                        <FormControlLabel
-                            control={<Checkbox />}
-                            label="I have read and agree to the terms of service."
-                        />
                     </Grid>
-                </Grid>
                 <Button color="primary" variant="contained" type="submit">
                     <Icon>send</Icon>
                     <span className="pl-2 capitalize">Submit</span>

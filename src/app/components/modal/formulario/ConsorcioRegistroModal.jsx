@@ -3,7 +3,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import { ValidatorForm, TextValidator, SelectValidator } from 'react-material-ui-form-validator'
+import {
+    ValidatorForm,
+    TextValidator,
+    SelectValidator,
+} from 'react-material-ui-form-validator'
 import { Autocomplete, createFilterOptions } from '@material-ui/lab'
 import useConsorcio from 'app/hooks/useConsorcio'
 import useGeneral from 'app/hooks/useGeneral'
@@ -75,9 +79,12 @@ export default function ConsorcioRegistroModal({
                 idConsorcio: consorcioActualizar.idConsorcio,
                 nombre: consorcioActualizar.nombre,
                 slogan: consorcioActualizar.slogan,
-                mensajeCreacionJugada: consorcioActualizar.mensajeCreacionJugada,
-                mensajeCancelacionJugada: consorcioActualizar.mensajeCancelacionJugada,
-                mensajeJugadaPremiada: consorcioActualizar.mensajeJugadaPremiada,
+                mensajeCreacionJugada:
+                    consorcioActualizar.mensajeCreacionJugada,
+                mensajeCancelacionJugada:
+                    consorcioActualizar.mensajeCancelacionJugada,
+                mensajeJugadaPremiada:
+                    consorcioActualizar.mensajeJugadaPremiada,
                 correo: consorcioActualizar.correo,
                 telefono: consorcioActualizar.telefono,
                 sector: consorcioActualizar.nombre,
@@ -108,15 +115,15 @@ export default function ConsorcioRegistroModal({
         // event.preventDefault()
         // console.log('ejecutando metodo submit');
         // return;
-        let codigo = 0;
-        if(state.idConsorcio > 0) {
+        let codigo = 0
+        if (state.idConsorcio > 0) {
             // alert('Actualizando');
             // return;
-            codigo = await actualizarConsorcio(state);
+            codigo = await actualizarConsorcio(state)
         } else {
             // alert('Registrando');
             // return;
-            codigo = await registrarConsorcio(state);
+            codigo = await registrarConsorcio(state)
         }
 
         console.log('codigo: ', codigo)
@@ -173,17 +180,16 @@ export default function ConsorcioRegistroModal({
                     <div className={classes.paper}>
                         <h2 id="transition-modal-title">
                             <Grid container>
-                            <Avatar
-                                                    style={{
-                                                        height: '40px',
-                                                        width: '40px',
-                                                        marginRight: '10px'
-                                                    }}
-                                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs03_SqIWGSw_H6T1YJCvhn1zR3oAsL41JHuE69BCCLsxFKHP1PdpMcqPc9A9kYdWpsFU&usqp=CAU"
-                                                />
-                                                Registro de Consorcio
+                                <Avatar
+                                    style={{
+                                        height: '40px',
+                                        width: '40px',
+                                        marginRight: '10px',
+                                    }}
+                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs03_SqIWGSw_H6T1YJCvhn1zR3oAsL41JHuE69BCCLsxFKHP1PdpMcqPc9A9kYdWpsFU&usqp=CAU"
+                                />
+                                Registro de Consorcio
                             </Grid>
-                        
                         </h2>
                         <hr />
                         <div className="p-4 h-full">
@@ -193,10 +199,8 @@ export default function ConsorcioRegistroModal({
                                 autoComplete="off"
                                 onError={() => null}
                             >
-                                
                                 <Grid container spacing={2}>
-                                    <Grid item xs={12} sm={6}>
-
+                                    <Grid item xs={6}>
                                         <TextValidator
                                             required
                                             className="mb-4 w-full"
@@ -208,13 +212,14 @@ export default function ConsorcioRegistroModal({
                                             variant="outlined"
                                             fullWidth
                                             size="small"
-                                            validators={[
-                                                'required',
+                                            validators={['required']}
+                                            errorMessages={[
+                                                'Este campo es obligatorio',
                                             ]}
-                                            errorMessages={['Este campo es obligatorio']}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} sm={6}>
+
+                                    <Grid item xs={6}>
                                         <TextValidator
                                             required
                                             className="mb-4 w-full"
@@ -226,14 +231,15 @@ export default function ConsorcioRegistroModal({
                                             variant="outlined"
                                             fullWidth
                                             size="small"
-                                            validators={[
-                                                'required',
+                                            validators={['required']}
+                                            errorMessages={[
+                                                'this field is required',
                                             ]}
-                                            errorMessages={['this field is required']}
                                         />
                                     </Grid>
+                                </Grid>
+                                <Grid container>
                                     <Grid item xs={12}>
-
                                         <TextValidator
                                             required
                                             className="mb-4 w-full"
@@ -241,17 +247,18 @@ export default function ConsorcioRegistroModal({
                                             onChange={handleChange}
                                             type="text"
                                             name="mensajeCreacionJugada"
-                                            value={state.mensajeCreacionJugada || ''}
+                                            value={
+                                                state.mensajeCreacionJugada ||
+                                                ''
+                                            }
                                             variant="outlined"
                                             fullWidth
                                             size="small"
-                                            validators={[
-                                                'required',
+                                            validators={['required']}
+                                            errorMessages={[
+                                                'this field is required',
                                             ]}
-                                            errorMessages={['this field is required']}
                                         />
-                                    </Grid>
-                                    <Grid item xs={12}>
 
                                         <TextValidator
                                             required
@@ -260,17 +267,18 @@ export default function ConsorcioRegistroModal({
                                             onChange={handleChange}
                                             type="text"
                                             name="mensajeCancelacionJugada"
-                                            value={state.mensajeCancelacionJugada || ''}
+                                            value={
+                                                state.mensajeCancelacionJugada ||
+                                                ''
+                                            }
                                             variant="outlined"
                                             fullWidth
                                             size="small"
-                                            validators={[
-                                                'required',
+                                            validators={['required']}
+                                            errorMessages={[
+                                                'this field is required',
                                             ]}
-                                            errorMessages={['this field is required']}
                                         />
-                                    </Grid>
-                                    <Grid item xs={12}>
 
                                         <TextValidator
                                             required
@@ -279,17 +287,22 @@ export default function ConsorcioRegistroModal({
                                             onChange={handleChange}
                                             type="text"
                                             name="mensajeJugadaPremiada"
-                                            value={state.mensajeJugadaPremiada || ''}
+                                            value={
+                                                state.mensajeJugadaPremiada ||
+                                                ''
+                                            }
                                             variant="outlined"
                                             fullWidth
                                             size="small"
-                                            validators={[
-                                                'required',
+                                            validators={['required']}
+                                            errorMessages={[
+                                                'this field is required',
                                             ]}
-                                            errorMessages={['this field is required']}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} sm={6}>
+
+                                    <Grid container spacing={2}>
+                                    <Grid item xs={6}>
                                         <TextValidator
                                             required
                                             className="mb-4 w-full"
@@ -301,13 +314,18 @@ export default function ConsorcioRegistroModal({
                                             variant="outlined"
                                             fullWidth
                                             size="small"
+                                            validators={['required']}
+                                            errorMessages={[
+                                                'Este campo es obligatorio',
+                                            ]}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                    <TextValidator
+
+                                    <Grid item xs={6}>
+                                        <TextValidator
                                             required
                                             className="mb-4 w-full"
-                                            label="correo"
+                                            label="telefono"
                                             onChange={handleChange}
                                             type="text"
                                             name="telefono"
@@ -315,80 +333,87 @@ export default function ConsorcioRegistroModal({
                                             variant="outlined"
                                             fullWidth
                                             size="small"
+                                            validators={['required']}
+                                            errorMessages={[
+                                                'Este campo es obligatorio',
+                                            ]}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <Autocomplete
-                                            name="ciudad"
-                                            onError="asdfa"
-
-                                            options={ciudades}
-                                            onChange={(event, newValue) => {
-                                                if (newValue !== null) {
-                                                    setState({
-                                                        ...state,
-                                                        ciudad: newValue.idCiudad,
-                                                    })
-                                                    console.log(
-                                                        'valores: ',
-                                                        state
-                                                    )
+                                </Grid>
+                                    {/* <Grid container spacing={2}>
+                                        <Grid item xs={12} sm={6}>
+                                            <Autocomplete
+                                                name="ciudad"
+                                                onError="asdfa"
+                                                options={ciudades}
+                                                onChange={(event, newValue) => {
+                                                    if (newValue !== null) {
+                                                        setState({
+                                                            ...state,
+                                                            ciudad: newValue.idCiudad,
+                                                        })
+                                                        console.log(
+                                                            'valores: ',
+                                                            state
+                                                        )
+                                                    }
+                                                }}
+                                                getOptionLabel={(option) =>
+                                                    option.ciudad
                                                 }
-                                            }}
-                                            getOptionLabel={(option) =>
-                                                option.ciudad
-                                            }
-                                            renderOption={(option) =>
-                                                option.ciudad
-                                            }
-                                            size="small"
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    name="ciudad"
-                                                    {...params}
-                                                    label="Ciudad"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <Autocomplete
-                                            name="sector"
-                                            options={ciudades}
-                                            onChange={(event, newValue) => {
-                                                if (newValue !== null) {
-                                                    setState({
-                                                        ...state,
-                                                        ciudad: newValue.idCiudad,
-                                                    })
-                                                    console.log(
-                                                        'valores: ',
-                                                        state
-                                                    )
+                                                renderOption={(option) =>
+                                                    option.ciudad
                                                 }
-                                            }}
-                                            getOptionLabel={(option) =>
-                                                option.ciudad
-                                            }
-                                            renderOption={(option) =>
-                                                option.ciudad
-                                            }
-                                            size="small"
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    name="sector"
-                                                    size="small"
-                                                    {...params}
-                                                    label="Sector"
-                                                    variant="outlined"
-                                                    fullWidth
-                                                />
-                                            )}
-                                        />
-                                    </Grid>
+                                                size="small"
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        name="ciudad"
+                                                        {...params}
+                                                        label="Ciudad"
+                                                        variant="outlined"
+                                                        fullWidth
+                                                    />
+                                                )}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <Autocomplete
+                                                name="sector"
+                                                options={ciudades}
+                                                onChange={(event, newValue) => {
+                                                    if (newValue !== null) {
+                                                        setState({
+                                                            ...state,
+                                                            ciudad: newValue.idCiudad,
+                                                        })
+                                                        console.log(
+                                                            'valores: ',
+                                                            state
+                                                        )
+                                                    }
+                                                }}
+                                                getOptionLabel={(option) =>
+                                                    option.ciudad
+                                                }
+                                                renderOption={(option) =>
+                                                    option.ciudad
+                                                }
+                                                size="small"
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        name="sector"
+                                                        size="small"
+                                                        {...params}
+                                                        label="Sector"
+                                                        variant="outlined"
+                                                        fullWidth
+                                                    />
+                                                )}
+                                            />
+                                        </Grid>
+                                    </Grid> */}
 
+                                    <Grid container spacing={2}>
                                     <Grid item xs={12}>
                                         <TextValidator
                                             required
@@ -401,14 +426,20 @@ export default function ConsorcioRegistroModal({
                                             variant="outlined"
                                             fullWidth
                                             size="small"
-                                            validators={[
-                                                'required',
+                                            validators={['required']}
+                                            errorMessages={[
+                                                'Este campo es obligatorio',
                                             ]}
-                                            errorMessages={['Este campo es obligatorio']}
                                         />
                                     </Grid>
+                                    </Grid>
+                                    
 
-                                    <Grid container xs={12} justifyContent="space-between">
+                                    <Grid
+                                        container
+                                        xs={12}
+                                        justifyContent="space-between"
+                                    >
                                         <RadioGroup
                                             className="mb-4"
                                             value={state.status || ''}
@@ -434,32 +465,26 @@ export default function ConsorcioRegistroModal({
                                             />
                                         </RadioGroup>
 
-                                        
                                         <Button
                                             component="label"
-                                            style={{padding: '5px'}}
-                                            >
+                                            style={{ padding: '5px' }}
+                                        >
                                             Subir imagen
-                                            <input
-                                                type="file"
-                                                hidden
-                                            />
-                                            </Button>
+                                            <input type="file" hidden />
+                                        </Button>
                                     </Grid>
+                                </Grid>
 
-                                    </Grid>
-    
-
-                                    <Button
-                                        color="primary"
-                                        variant="contained"
-                                        type="submit"
-                                    >
-                                        <Icon>save</Icon>
-                                        <span className="pl-2 capitalize">
-                                            Guardar
-                                        </span>
-                                    </Button>
+                                <Button
+                                    color="primary"
+                                    variant="contained"
+                                    type="submit"
+                                >
+                                    <Icon>save</Icon>
+                                    <span className="pl-2 capitalize">
+                                        Guardar
+                                    </span>
+                                </Button>
                             </ValidatorForm>
                         </div>
                     </div>
