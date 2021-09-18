@@ -128,7 +128,7 @@ export default function ConsorcioRegistroModal({
 
         console.log('codigo: ', codigo)
         if (codigo === 200) {
-            Swal.fire('Good job!', 'You clicked the button!', 'success').then(
+            Swal.fire('Confirmación!', 'Se ha actualizado de forma correcta!', 'success').then(
                 (result) => {
                     if (result.isConfirmed) {
                         setOpen(false)
