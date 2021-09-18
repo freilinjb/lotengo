@@ -3,44 +3,38 @@ import { Breadcrumb, SimpleCard } from 'app/components'
 import { Grid, IconButton, Icon } from '@material-ui/core'
 import MUIDataTable from 'mui-datatables'
 
-import useConsorcio from 'app/hooks/useConsorcio';
-import useGeneral from 'app/hooks/useGeneral';
+import useUsuario from 'app/hooks/useUsuario';
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from "@material-ui/core/Tooltip";
 import Swal from 'sweetalert2';
 
-import ConsorcioRegistroModal from 'app/components/modal/formulario/ConsorcioRegistroModal'
+import UsuarioRegistroModal from 'app/components/modal/formulario/UsuarioRegistroModal'
 const Usuario = () => {
   const [open, setOpen] = useState(false);
-  const [consorcioActualizar, setConsorcioActualizar] = useState({});
+  const [usuarioActualizar, setUsuarioActualizar] = useState({});
 
-    const { getConsorcios, consorcios, eliminarConsorcioByID } = useConsorcio()
-    const { saludar } = useGeneral();
+    const { saludar, getUsuarios, usuarios, eliminarUsuarioByID } = useUsuario();
 
     const consultarFetch = async () => {
-        await getConsorcios();
+        await getUsuarios();
     }
     useEffect(() => {
         saludar('Freilin Jose')
         consultarFetch();
     }, []);
 
-    const openModalActualizar = (consorcio) => {
-        setConsorcioActualizar(consorcio);
+    const openModalActualizar = (usuarios) => {
+        setUsuarioActualizar(usuarios);
 
         setOpen(true);
     }
 
     const openModalRegistrar = () => {
-        setConsorcioActualizar(false);
+        setUsuarioActualizar(false);
         setOpen(true);
     }
 
-    useEffect(() => {
-        console.log('Consorcios: ', consorcios)
-    }, [consorcios]);
-
-    const eliminarConsorcio = async (data) => {
+    const eliminarUsuario = async (data) => {
         Swal.fire({
             title: 'Confirmación',
             text: `Estas seguro de querer borrar el usuario ${data.nombre}!`,
@@ -51,7 +45,7 @@ const Usuario = () => {
             confirmButtonText: 'Si, borrarlo!'
           }).then( async(result) => {
             if (result.isConfirmed) {
-               const resultados = await eliminarConsorcioByID(data.idConsorcio);
+               const resultados = await eliminarUsuarioByID(data.idUsuario);
                 console.log('ResulSwal: ', resultados);
 
                 if(resultados.success === true) {
@@ -73,6 +67,17 @@ const Usuario = () => {
     }
     const columns = [
         {
+            name: '',
+            label: '#',
+            options: {
+                filter: false,
+                customBodyRender: (value, tableMeta, update) => {
+                    let rowIndex = Number(tableMeta.rowIndex)+1;
+                    return (<span>{rowIndex}</span>)
+                }
+            }
+        },
+        {
             name: 'nombre',
             label: 'Nombre',
         },
@@ -81,8 +86,8 @@ const Usuario = () => {
             label: 'Creado Por',
         },
         {
-            name: 'slogan',
-            label: 'Slogan',
+            name: 'rol',
+            label: 'Rol',
         },
         'telefono',
         'correo',
@@ -90,7 +95,7 @@ const Usuario = () => {
             name: 'estado',
             options: {
                 customBodyRender: (value, tableMeta, updateValue) => {
-                    if(value == 1) {
+                    if(value === 'Activo') {
                         return (<small className="border-radius-4 bg-primary text-white px-2 py-2px">Activo </small>)
                     } else {
                         return (<small className="border-radius-4 bg-error text-white px-2 py-2px">Inactivo </small>)
@@ -110,7 +115,7 @@ const Usuario = () => {
                             <IconButton
                                 color="secondary"
                                 aria-label="delete"
-                                onClick={() => eliminarConsorcio(consorcios[value])}
+                                onClick={() => eliminarUsuario(usuarios[value])}
                             >
                                 <Icon>delete</Icon>
                             </IconButton>
@@ -118,7 +123,7 @@ const Usuario = () => {
                             <IconButton
                                 color="primary"
                                 aria-label="edit"
-                                onClick={() => openModalActualizar(consorcios[value])}
+                                onClick={() => openModalActualizar(usuarios[value])}
                             >
                                 <Icon>edit</Icon>
                             </IconButton>
@@ -134,7 +139,7 @@ const Usuario = () => {
     }
     
     const CustomToolbar = () => (
-      <Tooltip title={"Agregar nuevo consorcio"}>
+      <Tooltip title={"Agregar nuevo usuario"}>
           <IconButton  onClick={()  =>  openModalRegistrar()/*handleClick('freilin')*/}>
             <AddIcon/>
           </IconButton>
@@ -176,14 +181,14 @@ const Usuario = () => {
                             {/* <DataGrid rows={rows} columns={columns} /> */}
                                 <MUIDataTable
                                     title={'Usuarios'}
-                                    data={consorcios}
+                                    data={usuarios}
                                     columns={columns}
                                     options={options}
                                 />
                         </Grid>
                     </Grid>
                 </SimpleCard>
-                <ConsorcioRegistroModal open={open} setOpen={setOpen} consorcioActualizar={consorcioActualizar}/>
+                <UsuarioRegistroModal open={open} setOpen={setOpen} usuarioActualizar={usuarioActualizar}/>
             </div>
         </>
     )
