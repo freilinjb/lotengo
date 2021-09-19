@@ -89,10 +89,27 @@ const Usuario = () => {
             name: 'rol',
             label: 'Rol',
         },
-        'telefono',
-        'correo',
+        {
+            name: 'telefono',
+            label: 'Telefono',
+            options: {
+                customBodyRender: (value, tableMeta, updateValue) => {
+                    return (<a href={`tel:+${value}`} style={{color: 'blue'}}>{value}</a>)
+                }
+            }
+        },
+        {
+            name: 'correo',
+            label: 'Correo',
+            options: {
+                customBodyRender: (value, tableMeta, updateValue) => {
+                    return (<a href={`mailto:${value}`} style={{color: 'blue'}}>{value}</a>)
+                }
+            }
+        },
         {
             name: 'estado',
+            label: 'Estado',
             options: {
                 customBodyRender: (value, tableMeta, updateValue) => {
                     if(value === 'Activo') {

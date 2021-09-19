@@ -9,6 +9,13 @@ const reducer = (state, action) => {
                 usuarios: action.payload,
             }
         }
+        case 'OBTENER_ROLES': {
+            return {
+                ...state,
+                roles: action.payload,
+            }
+        }
+        
         default: {
             return { ...state }
         }
@@ -17,7 +24,7 @@ const reducer = (state, action) => {
 
 const UsuarioContext = createContext({
     usuarios: [],
-    cargandoUsuario: [],
+    cargandoUsuario: false,
     mensajeUsuario: '',
 })
 
@@ -29,11 +36,20 @@ export const UsuarioProvider = ({ settings, children }) => {
         // return;
         return await clienteAxios
             .post('api/usuario/empleado', {
-                diaDesde: usuario.diaDesde,
-                diaHasta: usuario.diaHasta,
-                horaDesde: usuario.horaInicio,
-                horaHasta: usuario.horaFinal,
-                estado: Number(usuario.status),
+                usuario: usuario.usuario,
+                idRol: Number(usuario.rol),
+                clave: usuario.clave,
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                apodo: usuario.apodo,
+                correo: usuario.correo,
+                telefono: usuario.telefono,
+                idCiudad: Number(usuario.ciudad),
+                idSector: Number(usuario.sector),
+                calle: usuario.calle,
+                direccion: usuario.direccion,
+                observacion: usuario.observacion,
+                estado: Number(usuario.estado),
             })
             .then(async (response) => {
                 const data = { success: null, msg: null }
@@ -61,10 +77,16 @@ export const UsuarioProvider = ({ settings, children }) => {
         // return;
         return await clienteAxios
             .put(`api/usuario/${usuario.idUsuario}`, {
-                diaDesde: usuario.diaDesde,
-                diaHasta: usuario.diaHasta,
-                horaDesde: usuario.horaInicio,
-                horaHasta: usuario.horaFinal,
+                usuario: usuario.usuario,
+                idRol: Number(usuario.rol),
+                clave: usuario.clave,
+                correo: usuario.correo,
+                telefono: usuario.telefono,
+                idCiudad: Number(usuario.ciudad),
+                idSector: Number(usuario.sector),
+                calle: usuario.calle,
+                direccion: usuario.direccion,
+                observacion: usuario.observacion,
                 estado: Number(usuario.status),
             })
             .then(async (response) => {
@@ -88,10 +110,10 @@ export const UsuarioProvider = ({ settings, children }) => {
             })
     }
 
-    const eliminarUsuarioByID = async (idTerminal) => {
-        console.log('terminal: ', idTerminal)
+    const eliminarUsuarioByID = async (idUsuario) => {
+        console.log('idUsuario: ', idUsuario)
         return await clienteAxios
-            .delete(`api/terminal/${idTerminal}`)
+            .delete(`api/usuario/empleado/${idUsuario}`)
             .then(async (response) => {
                 const data = { success: null, msg: null }
                 data.msg = response.data.msg
@@ -136,6 +158,17 @@ export const UsuarioProvider = ({ settings, children }) => {
             })
         })
     }
+
+    const getRolesDeUsuarios = async () => {
+       return await clienteAxios.get('api/usuario/rol').then((response) => {
+            const roles = response.data.data
+            dispatch({
+                type: 'OBTENER_ROLES',
+                payload: roles,
+            })
+            return roles;
+        })
+    }
     const saludar = (nombre) => {
         console.log('Hola como estas Terminal' + nombre)
     }
@@ -145,12 +178,14 @@ export const UsuarioProvider = ({ settings, children }) => {
             value={{
                 usuarios: state.usuarios,
                 mensajeUsuario: state.mensajeUsuario,
+                roles: state.roles,
                 saludar,
                 getUsuarios,
                 getUsuarioByID,
                 registrarUsuario,
                 actualizarTerminar,
                 eliminarUsuarioByID,
+                getRolesDeUsuarios
             }}
         >
             {children}
