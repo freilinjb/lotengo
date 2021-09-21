@@ -68,7 +68,7 @@ const Layout1Topbar = () => {
     const { settings, updateSettings } = useSettings()
     const { logout, user, usuario } = useAuth()
 
-    console.log('usuario: ', user);
+    console.log('usuarioPrueba: ', usuario);
     const isMdScreen = useMediaQuery(theme.breakpoints.down('md'))
     const fixed = settings?.layout1Settings?.topbar?.fixed
 
@@ -144,7 +144,7 @@ const Layout1Topbar = () => {
                                     </Hidden>
                                     <Avatar
                                         className="cursor-pointer"
-                                        src={user.avatar}
+                                        src={usuario.avatar}
                                     />
                                 </div>
                             }

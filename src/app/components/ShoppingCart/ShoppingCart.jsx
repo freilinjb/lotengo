@@ -38,12 +38,12 @@ function ShoppingCart({ container }) {
     const classes = useStyles()
     const dispatch = useDispatch()
     const history = useHistory()
-    const { user } = useAuth()
+    const { user, usuario } = useAuth()
     const { cartList } = useSelector((state) => state.ecommerce)
     const { settings } = useSettings()
 
     if (!cartListLoaded) {
-        dispatch(getCartList(user.id))
+        dispatch(getCartList(usuario.idUsuario))
         cartListLoaded = true
     }
 

@@ -136,12 +136,7 @@ export const AuthProvider = ({ children }) => {
         }).then( async (response) => {
            console.log('respuesta: ', response.data);
            if(response.data.success === true) {
-                    // console.log('Respuesta: ', response.data);
                 const token = response.data.token;
-                // console.log('Token: ', token);
-                // const currentTime = jwtDecode(token);
-                // console.log('decodedTOKEN: ', currentTime);
-                // return;
                 setSession(token);
                 tokenAuth(`Bearer ${token}`);
 
@@ -151,21 +146,13 @@ export const AuthProvider = ({ children }) => {
                     rol: response.data.data.rol,
                     nombre: response.data.data.nombre,
                     idUsuario: response.data.data.usuarioAutenticado,
-                }
-                console.log('prueba:')
-                const user = {
                     avatar: '/assets/images/face-6.jpg',
-                    email: 'freilinjb@gmail.com',
-                    id: 1,
-                    name: 'Freilin Jose Jerez',
-                    role: 'SA',
                 }
-                // const usuario = response.data;
+
                 dispatch({
                     type: 'INICIAR_SESION',
                     payload: {
                         usuario,
-                        user,
                     },
                 })
            } else {
@@ -250,6 +237,7 @@ export const AuthProvider = ({ children }) => {
                             rol: results.data.data.rol,
                             nombre: results.data.data.nombre,
                             idUsuario: results.data.data.usuarioAutenticado,
+                            avatar: '/assets/images/face-6.jpg',
                         }
                     });
                     console.log('Usuario: ', usuario);
@@ -260,7 +248,7 @@ export const AuthProvider = ({ children }) => {
                         email: 'freilinjb@gmail.com',
                         id: 1,
                         name: 'Freilin Jose Jerez',
-                        role: 'SA',
+                        role: 'GUEST',
                     }
 
                     dispatch({
@@ -268,7 +256,7 @@ export const AuthProvider = ({ children }) => {
                         payload: {
                             isAuthenticated: true,
                             usuario,
-                            user,
+                            // user,
                         },
                     })
                 } else {
