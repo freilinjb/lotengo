@@ -117,7 +117,7 @@ const ConsorcioPrueba = () => {
         download: false,
         viewColumns: false,
         responsive,
-        selectableRows: false,
+        selectableRows: "none",
         // print: false,
         tableBodyHeight,
         tableBodyMaxHeight

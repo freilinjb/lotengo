@@ -72,14 +72,17 @@ export const UsuarioProvider = ({ settings, children }) => {
             })
     }
 
-    const actualizarTerminar = async (usuario) => {
+    const actualizarUsuario = async (usuario) => {
         console.log('usuario: ', usuario)
         // return;
         return await clienteAxios
-            .put(`api/usuario/${usuario.idUsuario}`, {
+            .patch(`api/usuario/empleado/${usuario.idUsuario}`, {
                 usuario: usuario.usuario,
                 idRol: Number(usuario.rol),
-                clave: usuario.clave,
+                // clave: usuario.clave,
+                nombre: usuario.nombre,
+                apellido: usuario.apellido,
+                apodo: usuario.apodo,
                 correo: usuario.correo,
                 telefono: usuario.telefono,
                 idCiudad: Number(usuario.ciudad),
@@ -87,22 +90,22 @@ export const UsuarioProvider = ({ settings, children }) => {
                 calle: usuario.calle,
                 direccion: usuario.direccion,
                 observacion: usuario.observacion,
-                estado: Number(usuario.status),
+                estado: Number(usuario.estado),
             })
             .then(async (response) => {
                 const data = { success: null, msg: null }
                 data.msg = response.data.msg
                 data.success = response.data.success
-                // console.log('registrarTermianlRespuesta: ', response.data.success);
+                // console.log('usuario: ', response.data.success);
                 // return;
                 if (response.status) {
                     dispatch({
                         type: 'MENSAJE',
-                        payload: 'Se ha actualizado de forma correcta!!',
+                        payload: 'Se ha registrado de forma correcta!!',
                     })
                 }
                 console.log('pruebaEnvio de datosL: ', data)
-                return data
+                return data;
             })
             .catch((error) => {
                 console.log('Error: ', error)
@@ -183,7 +186,7 @@ export const UsuarioProvider = ({ settings, children }) => {
                 getUsuarios,
                 getUsuarioByID,
                 registrarUsuario,
-                actualizarTerminar,
+                actualizarUsuario,
                 eliminarUsuarioByID,
                 getRolesDeUsuarios
             }}

@@ -148,7 +148,7 @@ const Consorcio = () => {
         download: false,
         viewColumns: false,
         responsive: 'vertical',
-        selectableRows: false,
+        selectableRows: "none",
         // print: false,
         tableBodyHeight: '400px',
         customToolbar: () => {

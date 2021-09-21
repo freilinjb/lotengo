@@ -21,6 +21,7 @@ import {
     FormControlLabel,
     Avatar,
     TextField,
+    Checkbox
 } from '@material-ui/core'
 import 'date-fns'
 import { string } from 'yup'
@@ -169,7 +170,7 @@ export default function UsuarioRegistroModal({
         if (codigo.success) {
             Swal.fire(
                 'Confirmación!',
-                'Se ha actualizado de forma correcta!',
+                `${codigo.msg}`,
                 'success'
             ).then((result) => {
                 if (result.isConfirmed) {
@@ -183,10 +184,10 @@ export default function UsuarioRegistroModal({
                 `${codigo.msg}!`,
                 'warning'
             ).then((result) => {
-                if (result.isConfirmed) {
-                    setOpen(false)
-                    getUsuarios()
-                }
+                // if (result.isConfirmed) {
+                //     setOpen(false)
+                //     getUsuarios()
+                // }
             })
         }
     }
@@ -339,44 +340,55 @@ export default function UsuarioRegistroModal({
                                     </Grid>
                                 </Grid>
                                 
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={6}>
-                                            <TextValidator
-                                                required
-                                                className="mb-4 w-full"
-                                                label="Contraseña"
-                                                onChange={handleChange}
-                                                type="text"
-                                                name="clave"
-                                                value={state.clave || ''}
-                                                variant="outlined"
-                                                fullWidth
-                                                size="small"
-                                                validators={['required']}
-                                                errorMessages={[
-                                                    'Este campo es obligatorio',
-                                                ]}
-                                            />
-                                        </Grid>
+                                    <Grid container spacing={2} justifyContent="center">
+                                        {state.idUsuario > 0 ? (
+                                            <Grid item xs={12}>
+                                                <FormControlLabel
+                                                    control={<Checkbox />}
+                                                    label="Solicitar cambiar contraseña."
+                                                />
+                                            </Grid>
+                                        ) : (
+                                            <>
+                                            <Grid item xs={6}>
+                                                <TextValidator
+                                                    required
+                                                    className="mb-4 w-full"
+                                                    label="Contraseña"
+                                                    onChange={handleChange}
+                                                    type="text"
+                                                    name="clave"
+                                                    value={state.clave || ''}
+                                                    variant="outlined"
+                                                    fullWidth
+                                                    size="small"
+                                                    validators={['required']}
+                                                    errorMessages={[
+                                                        'Este campo es obligatorio',
+                                                    ]}
+                                                />
+                                            </Grid>
 
-                                        <Grid item xs={6}>
-                                            <TextValidator
-                                                required
-                                                className="mb-4 w-full"
-                                                label="Repetir Contraseña"
-                                                onChange={handleChange}
-                                                type="text"
-                                                name="repetirClave"
-                                                value={state.repetirClave || ''}
-                                                variant="outlined"
-                                                fullWidth
-                                                size="small"
-                                                validators={['required']}
-                                                errorMessages={[
-                                                    'Este campo es obligatorio',
-                                                ]}
-                                            />
-                                        </Grid>
+                                            <Grid item xs={6}>
+                                                <TextValidator
+                                                    required
+                                                    className="mb-4 w-full"
+                                                    label="Repetir Contraseña"
+                                                    onChange={handleChange}
+                                                    type="text"
+                                                    name="repetirClave"
+                                                    value={state.repetirClave || ''}
+                                                    variant="outlined"
+                                                    fullWidth
+                                                    size="small"
+                                                    validators={['required']}
+                                                    errorMessages={[
+                                                        'Este campo es obligatorio',
+                                                    ]}
+                                                />
+                                            </Grid>
+                                        </>
+                                        ) }
                                     </Grid>
 
                                     <Grid container spacing={2}>

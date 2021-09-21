@@ -71,6 +71,7 @@ const Usuario = () => {
             label: '#',
             options: {
                 filter: false,
+                searchable: false,
                 customBodyRender: (value, tableMeta, update) => {
                     let rowIndex = Number(tableMeta.rowIndex)+1;
                     return (<span>{rowIndex}</span>)
@@ -80,6 +81,10 @@ const Usuario = () => {
         {
             name: 'nombre',
             label: 'Nombre',
+        },
+        {
+            name: 'usuario',
+            label: 'Usuario',
         },
         {
             name: 'creado_por',
@@ -170,7 +175,8 @@ const Usuario = () => {
         download: false,
         viewColumns: false,
         responsive: 'vertical',
-        selectableRows: false,
+        selectableRows: "none",
+        selectableRowsOnClick: false,
         // print: false,
         tableBodyHeight: '400px',
         customToolbar: () => {
