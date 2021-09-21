@@ -67,10 +67,6 @@ const JwtLogin = () => {
         }
     }
 
-    useEffect(() => {
-        setMessage(mensajeUsuario);
-    },[mensajeUsuario])
-
     return (
         <div
             className={clsx(

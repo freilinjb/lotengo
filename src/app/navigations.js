@@ -1,4 +1,4 @@
-import { authRoles } from './auth/authRoles'
+import { authRoles } from './auth/authRoles';
 
 export const navigations = [
     {
@@ -23,6 +23,7 @@ export const navigations = [
                 name: 'Consorcios',
                 iconText: 'SU',
                 path: '/consorcio/admin',
+                auth: "maestro",
             },
             {
                 name: 'Terminal',

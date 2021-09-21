@@ -422,7 +422,6 @@ export default function ConsorcioRegistroModal({
 
                                     <Grid
                                         container
-                                        xs={12}
                                         justifyContent="space-between"
                                     >
                                         <RadioGroup

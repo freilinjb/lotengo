@@ -1,4 +1,5 @@
 import React from 'react'
+import { authRoles } from 'app/auth/authRoles';
 
 const consorcioRoutes = [
     {
@@ -8,6 +9,7 @@ const consorcioRoutes = [
     {
         path: '/consorcioPrueba',
         component: React.lazy(() => import('./ConsorcioPrueba')),
+        auth: "mensajero"
     }
 ]
 

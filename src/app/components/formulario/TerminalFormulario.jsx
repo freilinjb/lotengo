@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import {
     Button,
@@ -14,17 +15,28 @@ import {
     MenuItem
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
 import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
+import { SettingsEthernet } from '@material-ui/icons';
 
-const SimpleForm = () => {
+const TerminalFormulario = () => {
+    const { id } = useParams();
     const [state, setState] = useState({
+        nombre:'',
+        consorcio:'',
+        telefono:'',
+        correo:'',
+        pais:'',
+        ciudad:'',
+        sector:'',
+        direccion:'',
+        observacion:'',
+        estado: '1',
         date: new Date(),
-    })
+    });
+
+    useEffect(() => {
+        console.log('Actualizando la terminal: ', id);
+    },[]);
 
     useEffect(() => {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -39,8 +51,8 @@ const SimpleForm = () => {
     }, [state.password])
 
     const handleSubmit = (event) => {
-        // console.log("submitted");
-        // console.log(event);
+        event.preventDefault();
+        const resultado = (id > 0) ? console.log('registrando...') : console.log('actualizando...');
     }
 
     const handleChange = (event) => {
@@ -51,19 +63,10 @@ const SimpleForm = () => {
         })
     }
 
-    const handleDateChange = (date) => {
-        setState({ ...state, date })
-    }
-
     const {
         username,
         firstName,
-        creditCard,
-        mobile,
-        password,
-        confirmPassword,
         gender,
-        date,
         email,
         consorcio
     } = state;
@@ -78,14 +81,7 @@ const SimpleForm = () => {
         },
       }));
 
-    const classes = useStyles();
-  const [age, setAge] = React.useState('');
-
-
-
-
     return (
-        <div>
             <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
                 <Grid container spacing={6}>
                     <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -94,8 +90,8 @@ const SimpleForm = () => {
                             label="Nombre"
                             onChange={handleChange}
                             type="text"
-                            name="username"
-                            value={username || ''}
+                            name="nombre"
+                            value={state.nombre || ''}
                             variant="outlined"
                             fullWidth
                             size="small"
@@ -115,7 +111,7 @@ const SimpleForm = () => {
                             <Select
                             labelId="consorcioLabel"
                             id="consorcio"
-                            value={consorcio}
+                            value={state.consorcio}
                             name="consorcio"
                             onChange={handleChange}
                             label="Consorcio"
@@ -138,7 +134,7 @@ const SimpleForm = () => {
                             variant="outlined"
                             fullWidth
                             size="small"
-                            value={firstName || ''}
+                            value={state.telefono || ''}
                             validators={['required']}
                             errorMessages={['this field is required']}
                         />
@@ -148,7 +144,7 @@ const SimpleForm = () => {
                             onChange={handleChange}
                             type="correo"
                             name="correo"
-                            value={email || ''}
+                            value={state.correo || ''}
                             variant="outlined"
                             fullWidth
                             size="small"
@@ -166,14 +162,14 @@ const SimpleForm = () => {
                                 size="small"
                                 style={{marginBottom: '15px'}}
                             >
-                            <InputLabel id="consorcioLabel">Pais</InputLabel>
+                            <InputLabel id="paisLabel">Pais</InputLabel>
                             <Select
-                            labelId="consorcioLabel"
-                            id="consorcio"
-                            value={consorcio}
-                            name="consorcio"
+                            labelId="paisLabel"
+                            id="pais"
+                            value={state.pais}
+                            name="pais"
                             onChange={handleChange}
-                            label="Consorcio"
+                            label="Pais"
                             >
                             <MenuItem value="">
                                 <em>None</em>
@@ -189,14 +185,14 @@ const SimpleForm = () => {
                                 size="small"
                                 style={{marginBottom: '15px'}}
                             >
-                            <InputLabel id="consorcioLabel">Ciudad</InputLabel>
+                            <InputLabel id="ciudadLabel">Ciudad</InputLabel>
                             <Select
-                            labelId="consorcioLabel"
-                            id="consorcio"
-                            value={consorcio}
-                            name="consorcio"
+                            labelId="ciudadLabel"
+                            id="ciudad"
+                            value={state.ciudad}
+                            name="ciudad"
                             onChange={handleChange}
-                            label="Consorcio"
+                            label="Ciudad"
                             >
                             <MenuItem value="">
                                 <em>None</em>
@@ -216,7 +212,7 @@ const SimpleForm = () => {
                             <Select
                             labelId="sectorLabel"
                             id="sector"
-                            value={consorcio}
+                            value={state.sector}
                             name="sector"
                             onChange={handleChange}
                             label="sector"
@@ -235,7 +231,7 @@ const SimpleForm = () => {
                             onChange={handleChange}
                             type="text"
                             name="direccion"
-                            value={username || ''}
+                            value={state.direccion || ''}
                             variant="outlined"
                             fullWidth
                             size="small"
@@ -254,7 +250,7 @@ const SimpleForm = () => {
                             onChange={handleChange}
                             type="text"
                             name="observacion"
-                            value={username || ''}
+                            value={state.observacion || ''}
                             variant="outlined"
                             fullWidth
                             size="small"
@@ -266,19 +262,19 @@ const SimpleForm = () => {
                         />
                         <RadioGroup
                             className="mb-4"
-                            value={gender || ''}
-                            name="gender"
+                            value={state.estado || ''}
+                            name="estado"
                             onChange={handleChange}
                             row
                         >
                             <FormControlLabel
-                                value="Male"
+                                value="1"
                                 control={<Radio color="secondary" />}
                                 label="Activo"
                                 labelPlacement="end"
                             />
                             <FormControlLabel
-                                value="Female"
+                                value="0"
                                 control={<Radio color="secondary" />}
                                 label="Inactivo"
                                 labelPlacement="end"
@@ -291,8 +287,7 @@ const SimpleForm = () => {
                     <span className="pl-2 capitalize">Submit</span>
                 </Button>
             </ValidatorForm>
-        </div>
     )
 }
 
-export default SimpleForm
+export default TerminalFormulario

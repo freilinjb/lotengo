@@ -62,6 +62,7 @@ const AppForm = () => {
                     <Tab label="Datos" {...a11yProps(0)} />
                     <Tab label="Presupuesto" {...a11yProps(1)} />
                     <Tab label="Modulos" {...a11yProps(2)} />
+                    <Tab label="Empleados" {...a11yProps(3)} />
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0}>
@@ -72,6 +73,9 @@ const AppForm = () => {
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     Item Three
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    Empleados
                 </TabPanel>
                 </div>
             </SimpleCard>

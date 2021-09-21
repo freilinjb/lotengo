@@ -7,6 +7,9 @@ const TerminalRoutes = [
     },{
         path: '/terminal/add',
         component: React.lazy(() => import('./TerminalRegistro')),
+    },{
+        path: '/terminal/edit/:id',
+        component: React.lazy(() => import('./TerminalRegistro')),
     },
 ]
 
