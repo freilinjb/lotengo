@@ -9,6 +9,20 @@ const reducer = (state, action) => {
                 ciudades: action.payload,
             }
         }
+        case 'OBTENER_SECTORES': {
+            return {
+                ...state,
+                sectores: action.payload,
+            }
+        }
+
+        case 'OBTENER_PAISES': {
+            return {
+                ...state,
+                paises: action.payload,
+            }
+        }
+        
         case 'MENSAJE': {
             return {
                 ...state,
@@ -76,6 +90,34 @@ export const GeneralProvider = ({ settings, children }) => {
 
         });
     }
+
+    const getPais = async () => {
+        return await clienteAxios.get('api/general/pais').then((response) => {
+             console.log('getCiudades: ', response.data.data);
+             const pais = response.data.data;
+             dispatch({
+                 type: 'OBTENER_PAISES',
+                 payload: pais,
+             });
+ 
+         }).finally(() => {
+ 
+         });
+     }
+
+    const getSectores = async () => {
+        return await clienteAxios.get('api/general/sector').then((response) => {
+             console.log('getSectores: ', response.data.data);
+             const sectores = response.data.data;
+             dispatch({
+                 type: 'OBTENER_SECTORES',
+                 payload: sectores,
+             });
+ 
+         }).finally(() => {
+ 
+         });
+     }
     const saludar = (nombre) => {
         console.log('Hola desde los generales ' + nombre);
     }
@@ -88,7 +130,9 @@ export const GeneralProvider = ({ settings, children }) => {
                 paises: state.paises,
                 mensajeConsorcio: state.mensajeConsorcio,
                 saludar,
+                getPais,
                 getCiudades,
+                getSectores,
                 getConsorcioByID,
                 registrarConsorcio
             }}

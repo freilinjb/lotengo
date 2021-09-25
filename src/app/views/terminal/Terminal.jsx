@@ -138,12 +138,13 @@ const Terminal = () => {
             }
         },
         {
-            name: 'Acción',
+            name: 'idTerminal',
+            label: 'Acción',
             options: {
                 filter: false,
                 sort: false,
                 empty: true,
-                customBodyRenderLite: (value, tableMeta, updateValue) => {
+                customBodyRender: (value, tableMeta, updateValue) => {
                     return (
                         <>
                         <Tooltip title="Verificar detalle" placement="top">
@@ -157,7 +158,7 @@ const Terminal = () => {
                         <Tooltip title="Actualizar" placement="top">
                             
                             <IconButton
-                                onClick={() => history.push('add')}
+                                onClick={() => /*console.log('terminal: ', value)*/ history.push(`edit/${value}`)}
                             >
                                 <Icon>arrow_right_alt</Icon>
                             </IconButton>

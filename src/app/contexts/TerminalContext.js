@@ -29,11 +29,16 @@ export const TerminalProvider = ({ settings, children }) => {
         // return;
         return await clienteAxios
             .post('api/terminal', {
-                diaDesde: terminal.diaDesde,
-                diaHasta: terminal.diaHasta,
-                horaDesde: terminal.horaInicio,
-                horaHasta: terminal.horaFinal,
-                estado: Number(terminal.status),
+                idConsorcio: Number(terminal.consorcio),
+                nombre: terminal.nombre,
+                correo: terminal.correo,
+                telefono: terminal.telefono,
+                idCiudad: Number(terminal.ciudad),
+                idSector: Number(terminal.sector),
+                calle: terminal.telefono,
+                casa: terminal.telefono,
+                direccion: terminal.direccion,
+                estado: Number(terminal.estado),
             })
             .then(async (response) => {
                 const data = { success: null, msg: null }
@@ -61,11 +66,16 @@ export const TerminalProvider = ({ settings, children }) => {
         // return;
         return await clienteAxios
             .put(`api/terminal/${terminal.idTerminal}`, {
-                diaDesde: terminal.diaDesde,
-                diaHasta: terminal.diaHasta,
-                horaDesde: terminal.horaInicio,
-                horaHasta: terminal.horaFinal,
-                estado: Number(terminal.status),
+                idConsorcio: Number(terminal.consorcio),
+                nombre: terminal.nombre,
+                correo: terminal.correo,
+                telefono: terminal.telefono,
+                idCiudad: Number(terminal.ciudad),
+                idSector: Number(terminal.sector),
+                calle: terminal.telefono,
+                casa: terminal.telefono,
+                direccion: terminal.direccion,
+                estado: Number(terminal.estado),
             })
             .then(async (response) => {
                 const data = { success: null, msg: null }

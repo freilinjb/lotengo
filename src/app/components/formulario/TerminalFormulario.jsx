@@ -14,28 +14,58 @@ import {
     Select,
     MenuItem
 } from '@material-ui/core';
+import Swal from 'sweetalert2';
+
 import { makeStyles } from '@material-ui/core/styles';
 import 'date-fns';
-import { SettingsEthernet } from '@material-ui/icons';
+import useTerminal from 'app/hooks/useTerminal'; 
+import useConsorcio from 'app/hooks/useConsorcio'; 
+import useGeneral from 'app/hooks/useGeneral'; 
 
 const TerminalFormulario = () => {
+    const { getTerminales, registrarTerminal, actualizarTerminar } = useTerminal();
+    const { getConsorcios, consorcios  } = useConsorcio();
+    const { getSectores, sectores, getCiudades, ciudades, getPais, paises } = useGeneral
+    ();
     const { id } = useParams();
     const [state, setState] = useState({
-        nombre:'',
-        consorcio:'',
-        telefono:'',
-        correo:'',
-        pais:'',
-        ciudad:'',
-        sector:'',
-        direccion:'',
-        observacion:'',
+        idTerminal: Number(id),
+        nombre:'Banca #',
+        consorcio:'55',
+        telefono:'829-565-1255',
+        correo:'freilinjb@gmail.com',
+        pais:'1',
+        ciudad:'1',
+        sector:'1',
+        direccion:'Villa Progreso, La Herradura, Edif13 Apt6A',
+        observacion:'Prueba',
         estado: '1',
         date: new Date(),
     });
 
     useEffect(() => {
-        console.log('Actualizando la terminal: ', id);
+        if(consorcios !== undefined) {
+            if(consorcios.length === 0) {
+                getConsorcios();
+            }
+        } else {
+            getConsorcios();
+        }
+        if(sectores !== undefined) {
+            if(sectores.length === 0) {
+                getSectores();
+            }
+        }
+        if(ciudades !== undefined) {
+            if(ciudades.length === 0) {
+                getCiudades();
+            }
+        }
+        getPais();
+        getSectores();
+        getCiudades();
+        getConsorcios();
+        console.log('Actualizando la terminal: ', consorcios);
     },[]);
 
     useEffect(() => {
@@ -50,9 +80,20 @@ const TerminalFormulario = () => {
         return () => ValidatorForm.removeValidationRule('isPasswordMatch')
     }, [state.password])
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const resultado = (id > 0) ? console.log('registrando...') : console.log('actualizando...');
+        const respuesta = (id === undefined) ? await registrarTerminal(state) : await actualizarTerminar(state);
+
+        console.log('respuesta: ', respuesta);
+
+        Swal.fire('Good job!', `${respuesta.msg}!`, `${respuesta.success ? "success" : "error"}`).then(
+            (result) => {
+                if (result.isConfirmed) {
+                    console.log('confirmado');
+                }
+            }
+        )
+        
     }
 
     const handleChange = (event) => {
@@ -70,16 +111,6 @@ const TerminalFormulario = () => {
         email,
         consorcio
     } = state;
-
-    const useStyles = makeStyles((theme) => ({
-        formControl: {
-          margin: theme.spacing(1),
-          minWidth: 120,
-        },
-        selectEmpty: {
-          marginTop: theme.spacing(2),
-        },
-      }));
 
     return (
             <ValidatorForm onSubmit={handleSubmit} onError={() => null}>
@@ -106,9 +137,11 @@ const TerminalFormulario = () => {
                                 fullWidth
                                 size="small"
                                 style={{marginBottom: '15px'}}
+                                required
                             >
                             <InputLabel id="consorcioLabel">Consorcio</InputLabel>
                             <Select
+                            required
                             labelId="consorcioLabel"
                             id="consorcio"
                             value={state.consorcio}
@@ -116,12 +149,12 @@ const TerminalFormulario = () => {
                             onChange={handleChange}
                             label="Consorcio"
                             >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                                {consorcios !== undefined && (
+                                    consorcios.filter(c => c.estado === 1).map((c => (
+                                        // console.log('ConsolaConsorcio: ', c);
+                                        <MenuItem value={c.idConsorcio}>{c.nombre}</MenuItem>
+                                    ))))
+                                }
                             </Select>
                         </FormControl>
 
@@ -171,12 +204,12 @@ const TerminalFormulario = () => {
                             onChange={handleChange}
                             label="Pais"
                             >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                                {paises !== undefined && (
+                                    paises.map((p => (
+                                        // console.log('ConsolaConsorcio: ', c);
+                                        <MenuItem value={p.idPais}>{p.pais}</MenuItem>
+                                    ))))
+                                }
                             </Select>
                         </FormControl>
 
@@ -194,12 +227,14 @@ const TerminalFormulario = () => {
                             onChange={handleChange}
                             label="Ciudad"
                             >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+
+                                {ciudades !== undefined && (
+                                    ciudades.map((c => (
+                                        // console.log('ConsolaConsorcio: ', c);
+                                        <MenuItem value={c.idCiudad}>{c.ciudad}</MenuItem>
+                                    ))))
+                                }
+                           
                             </Select>
                         </FormControl>
 
@@ -217,12 +252,18 @@ const TerminalFormulario = () => {
                             onChange={handleChange}
                             label="sector"
                             >
-                            <MenuItem value="">
+                                {sectores !== undefined && (
+                                    sectores.map((s => (
+                                        // console.log('ConsolaConsorcio: ', c);
+                                        <MenuItem value={s.idSector}>{s.sector}</MenuItem>
+                                    ))))
+                                }
+                            {/* <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
                             <MenuItem value={10}>Ten</MenuItem>
                             <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem> */}
                             </Select>
                         </FormControl>
                         <TextValidator
