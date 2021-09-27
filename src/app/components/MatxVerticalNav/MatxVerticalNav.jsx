@@ -47,6 +47,8 @@ const MatxVerticalNav = ({ items }) => {
 
     const renderLevels = (data) => {
         return data.map((item, index) => {
+            console.log('item...', item);
+            console.log('key...', index);
             if (item.type === 'label')
                 return (
                     <p

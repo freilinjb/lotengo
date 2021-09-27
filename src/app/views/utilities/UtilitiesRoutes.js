@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 const utilitiesRoutes = [
     {
         path: '/utilities/color',
         component: React.lazy(() => import('./Color')),
+        auth: "SA"
     },
     {
         path: '/utilities/spacing',

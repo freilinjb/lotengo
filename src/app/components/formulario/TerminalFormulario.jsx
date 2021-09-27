@@ -23,7 +23,7 @@ import useConsorcio from 'app/hooks/useConsorcio';
 import useGeneral from 'app/hooks/useGeneral'; 
 
 const TerminalFormulario = () => {
-    const { getTerminales, registrarTerminal, actualizarTerminar } = useTerminal();
+    const { getTerminales, getTerminalByID, registrarTerminal, actualizarTerminar } = useTerminal();
     const { getConsorcios, consorcios  } = useConsorcio();
     const { getSectores, sectores, getCiudades, ciudades, getPais, paises } = useGeneral
     ();
@@ -40,27 +40,9 @@ const TerminalFormulario = () => {
         direccion:'Villa Progreso, La Herradura, Edif13 Apt6A',
         observacion:'Prueba',
         estado: '1',
-        date: new Date(),
     });
 
     useEffect(() => {
-        if(consorcios !== undefined) {
-            if(consorcios.length === 0) {
-                getConsorcios();
-            }
-        } else {
-            getConsorcios();
-        }
-        if(sectores !== undefined) {
-            if(sectores.length === 0) {
-                getSectores();
-            }
-        }
-        if(ciudades !== undefined) {
-            if(ciudades.length === 0) {
-                getCiudades();
-            }
-        }
         getPais();
         getSectores();
         getCiudades();
@@ -68,6 +50,34 @@ const TerminalFormulario = () => {
         console.log('Actualizando la terminal: ', consorcios);
     },[]);
 
+    const consultarTerminal = async(idTerminal) => {
+
+        const respuesta = await getTerminalByID(idTerminal);
+        console.log('consultarTerminal: ', respuesta);
+
+        if(Object.keys(respuesta).length !== 0) {
+            console.log('prueba')
+            setState({
+                ...state,
+                nombre: respuesta.data.nombre,  
+                consorcio: respuesta.data.idConsorcio,  
+                telefono: respuesta.data.telefono,  
+                correo: respuesta.data.correo,  
+                ciudad: String(respuesta.data.idCiudad),  
+                sector: String(respuesta.data.idSector), 
+                direccion: respuesta.data.direccion,  
+                observacion: respuesta.data.observacion,  
+                correo: respuesta.data.correo,  
+                estado: String(respuesta.data.estado),  
+
+            });
+        }
+    }
+    useEffect(() => {
+        if(id > 0) {
+            consultarTerminal(id);
+        }
+    },[id]);
     useEffect(() => {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
             console.log(value)
@@ -84,12 +94,13 @@ const TerminalFormulario = () => {
         event.preventDefault();
         const respuesta = (id === undefined) ? await registrarTerminal(state) : await actualizarTerminar(state);
 
-        console.log('respuesta: ', respuesta);
+        console.log('handleSubmit: ', respuesta);
 
         Swal.fire('Good job!', `${respuesta.msg}!`, `${respuesta.success ? "success" : "error"}`).then(
             (result) => {
                 if (result.isConfirmed) {
                     console.log('confirmado');
+                    getTerminales();
                 }
             }
         )
@@ -168,8 +179,8 @@ const TerminalFormulario = () => {
                             fullWidth
                             size="small"
                             value={state.telefono || ''}
-                            validators={['required']}
-                            errorMessages={['this field is required']}
+                            // validators={['required']}
+                            // errorMessages={['this field is required']}
                         />
                         <TextValidator
                             className="mb-4 w-full"
@@ -181,9 +192,8 @@ const TerminalFormulario = () => {
                             variant="outlined"
                             fullWidth
                             size="small"
-                            validators={['required', 'isEmail']}
+                            validators={['isEmail']}
                             errorMessages={[
-                                'this field is required',
                                 'email is not valid',
                             ]}
                         />

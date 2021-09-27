@@ -1,10 +1,13 @@
+import React, { useEffect } from 'react';
 import { authRoles } from './auth/authRoles';
+import useAuth from 'app/hooks/useAuth';
 
 export const navigations = [
     {
         name: 'Dashboard',
         path: '/dashboard',
         icon: 'dashboard',
+        auth: "SA"
     },
     {
         label: 'Configuracion',

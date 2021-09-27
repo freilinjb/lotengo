@@ -1,5 +1,6 @@
 import React from 'react';
 import TerminalFormulario from 'app/components/formulario/TerminalFormulario';
+import ModulosTabla from 'app/components/tablas/ModulosTabla';
 import { Breadcrumb, SimpleCard } from 'app/components';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Tab, Tabs, Typography, AppBar, } from '@material-ui/core';
@@ -72,10 +73,10 @@ const AppForm = () => {
                     Item Two
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    Item Three
+                  <ModulosTabla/>
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    Empleados
+                    ModulosTabla
                 </TabPanel>
                 </div>
             </SimpleCard>

@@ -27,7 +27,7 @@ const isValidToken = (accessToken) => {
 
     const decodedToken = jwtDecode(accessToken)
     const currentTime = Date.now() / 1000
-    console.log(decodedToken)
+    // console.log(decodedToken)
     return decodedToken.exp > currentTime
 }
 
@@ -51,8 +51,8 @@ const reducer = (state, action) => {
     switch (action.type) {
         case 'INIT': {
             const { isAuthenticated, user, usuario } = action.payload
-            console.log('payload: ', action.payload);
-            console.log('isAuthenticated: ', isAuthenticated);
+            // console.log('payload: ', action.payload);
+            // console.log('isAuthenticated: ', isAuthenticated);
 
             return {
                 ...state,
@@ -74,8 +74,8 @@ const reducer = (state, action) => {
 
         case 'INICIAR_SESION': {
             const { usuario, user } = action.payload
-            console.log('usuario: ', usuario);
-            console.log('user: ', user);
+            // console.log('usuario: ', usuario);
+            // console.log('user: ', user);
             // return;
 
             return {
@@ -129,12 +129,12 @@ export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const iniciarSesion = async (usuario) => {
-        console.log('Iniciando Sesion');
+        // console.log('Iniciando Sesion');
         await clienteAxios.post('/api/auth', { 
             usuario: usuario.usuario, 
             clave: usuario.clave
         }).then( async (response) => {
-           console.log('respuesta: ', response.data);
+        //    console.log('respuesta: ', response.data);
            if(response.data.success === true) {
                 const token = response.data.token;
                 setSession(token);
@@ -144,6 +144,7 @@ export const AuthProvider = ({ children }) => {
                     master: response.data.data.master === 1 ? true : false,
                     usuario: response.data.data.usuario,
                     rol: response.data.data.rol,
+                    role: "GUEST",
                     nombre: response.data.data.nombre,
                     idUsuario: response.data.data.usuarioAutenticado,
                     avatar: '/assets/images/face-6.jpg',
@@ -175,7 +176,7 @@ export const AuthProvider = ({ children }) => {
             password,
         })
         const { accessToken, user } = response.data
-        console.log('Resputasta2: ', response);
+        // console.log('Resputasta2: ', response);
         setSession(accessToken)
         dispatch({
             type: 'LOGIN',
@@ -222,7 +223,7 @@ export const AuthProvider = ({ children }) => {
         (async () => {
             try {
                 const accessToken = window.localStorage.getItem('accessToken')
-                console.log('accessToken: ', accessToken);
+                // console.log('accessToken: ', accessToken);
                 // return;
                 if (accessToken && isValidToken(accessToken)) {
                     setSession(accessToken)
@@ -230,7 +231,7 @@ export const AuthProvider = ({ children }) => {
                     let usuario = {};
                     // clienteAxios.defaults.headers.common['authorization'] = `Bearer ${token}`;
                     await clienteAxios.get('/api/auth').then((results) => {
-                        console.log('resultados: ', results.data.data);
+                        // console.log('resultados: ', results.data.data);
                         usuario = {
                             master: results.data.data.master === 1 ? true : false,
                             usuario: results.data.data.usuario,
@@ -240,7 +241,7 @@ export const AuthProvider = ({ children }) => {
                             avatar: '/assets/images/face-6.jpg',
                         }
                     });
-                    console.log('Usuario: ', usuario);
+                    // console.log('Usuario: ', usuario);
 
                     // const { user } = response.data
                     const user = {
@@ -260,7 +261,7 @@ export const AuthProvider = ({ children }) => {
                         },
                     })
                 } else {
-                    console.log('prueba2');
+                    // console.log('prueba2');
 
                     dispatch({
                         type: 'INIT',

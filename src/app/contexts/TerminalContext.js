@@ -65,7 +65,7 @@ export const TerminalProvider = ({ settings, children }) => {
         console.log('Terminal: ', terminal)
         // return;
         return await clienteAxios
-            .put(`api/terminal/${terminal.idTerminal}`, {
+            .patch(`api/terminal/${terminal.idTerminal}`, {
                 idConsorcio: Number(terminal.consorcio),
                 nombre: terminal.nombre,
                 correo: terminal.correo,
@@ -128,12 +128,14 @@ export const TerminalProvider = ({ settings, children }) => {
             .then(async (results) => {
                 console.log('Eliminar: ', results.data)
                 const datos = {
-                    msg: results.data.msg,
+                    data: results.data.data,
                     success: results.data.success,
                 }
                 console.log('data despues: ', datos)
                 return datos
-            })
+            }).catch((error) => {
+                console.log('Error: ', error);
+            });
     }
 
     const getTerminales = async () => {

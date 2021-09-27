@@ -12,6 +12,7 @@ const formsRoutes = [
     {
         path: '/forms/upload',
         component: React.lazy(() => import('./UploadForm')),
+        auth: "SA"
     }
 ]
 
