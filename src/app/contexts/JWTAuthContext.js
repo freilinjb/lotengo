@@ -143,8 +143,8 @@ export const AuthProvider = ({ children }) => {
                 const usuario = {
                     master: response.data.data.master === 1 ? true : false,
                     usuario: response.data.data.usuario,
-                    rol: response.data.data.rol,
-                    role: "GUEST",
+                    rol: response.data.data.rol.toUpperCase(),
+                    role: response.data.data.rol.toUpperCase(),
                     nombre: response.data.data.nombre,
                     idUsuario: response.data.data.usuarioAutenticado,
                     avatar: '/assets/images/face-6.jpg',
@@ -154,6 +154,7 @@ export const AuthProvider = ({ children }) => {
                     type: 'INICIAR_SESION',
                     payload: {
                         usuario,
+                        user: usuario,
                     },
                 })
            } else {

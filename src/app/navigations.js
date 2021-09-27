@@ -32,6 +32,7 @@ export const navigations = [
                 name: 'Terminal',
                 iconText: 'assign',
                 path: '/terminal/admin',
+                auth: 'admin'
             },
             {
                 name: 'Equipos',

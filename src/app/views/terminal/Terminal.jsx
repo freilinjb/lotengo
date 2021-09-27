@@ -93,7 +93,7 @@ const Terminal = () => {
             label: 'Terminal',
             options: {
                 customBodyRender: (value, tableMeta, updateValue) => {
-                   console.log('TABLEMETA: ', terminales[tableMeta.rowIndex]);
+                //    console.log('TABLEMETA: ', terminales[tableMeta.rowIndex]);
 
                    const urlLogo = terminales[tableMeta.rowIndex].urlLogo === '' ? '/assets/images/products/headphone-2.jpg' : terminales[tableMeta.rowIndex].urlLogo;
                    
