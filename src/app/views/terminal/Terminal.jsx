@@ -41,11 +41,6 @@ const Terminal = () => {
         setOpen(true);
     }
 
-    const prueba = () => {
-        // console.log('getMac: ', getMac.part);
-        
-    }
-
     useEffect(() => {
         console.log('Terminal: ', terminales)
     }, [terminales]);
@@ -221,9 +216,6 @@ const Terminal = () => {
                         </Grid>
                     </Grid>
                 </SimpleCard>
-                <button
-                    onClick={() => prueba()}
-                >Hola Mundo</button>
                 <TerminalRegistroModal open={open} setOpen={setOpen} terminalActualizar={terminalActualizar}/>
             </div>
         </>

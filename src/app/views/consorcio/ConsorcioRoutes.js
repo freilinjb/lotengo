@@ -9,7 +9,7 @@ const consorcioRoutes = [
     {
         path: '/consorcioPrueba',
         component: React.lazy(() => import('./ConsorcioPrueba')),
-        auth: "mensajero"
+        auth: authRoles.maestro
     }
 ]
 
