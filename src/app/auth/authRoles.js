@@ -2,7 +2,7 @@ export const authRoles = {
     controlador: ['CONTROLADOR'], 
     maestro: ['MASTER', 'MENSAJERO', 'BANQUERO','PUBLICO','ADMINISTRADOR'],
     publico: ['PUBLICO'],
-    banquero: ['BANQUERO', 'PUBLICO'], 
+    banquero: ['BANQUERO', 'PUBLICO', 'MASTER'], 
     mensajero: ['MENSAJERO', 'PUBLICO'], 
     sa: ['SA'], // Only Super Admin has access
     admin: ['SA', 'ADMIN'], // Only SA & Admin has access

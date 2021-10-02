@@ -62,9 +62,9 @@ export const navigations = [
         auth: authRoles.maestro,
         children: [
             {
-                name: 'Ventas POS',
+                name: 'Loteria POS',
                 iconText: 'SI',
-                path: '/usuario/admin',
+                path: '/loteria/pos',
                 auth: authRoles.maestro
             },
         ],
@@ -98,41 +98,41 @@ export const navigations = [
     {
         label: 'Pages',
         type: 'label',
-        auth: authRoles.controlador,
+        auth: authRoles.maestro,
 
     },
     {
         name: 'Session/Auth',
         icon: 'security',
-        auth: authRoles.controlador,
+        auth: authRoles.maestro,
 
         children: [
             {
                 name: 'Sign in',
                 iconText: 'SI',
                 path: '/session/signin',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Sign up',
                 iconText: 'SU',
                 path: '/session/signup',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Forgot Password',
                 iconText: 'FP',
                 path: '/session/forgot-password',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Error',
                 iconText: '404',
                 path: '/session/404',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
         ],
@@ -141,14 +141,14 @@ export const navigations = [
     {
         label: 'Components',
         type: 'label',
-        auth: authRoles.controlador,
+        auth: authRoles.maestro,
 
     },
     {
         name: 'Components',
         icon: 'favorite',
         badge: { value: '30+', color: 'secondary' },
-        auth: authRoles.controlador,
+        auth: authRoles.maestro,
 
         children: [
             {
@@ -161,98 +161,98 @@ export const navigations = [
                 name: 'Buttons',
                 path: '/material/buttons',
                 iconText: 'B',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Checkbox',
                 path: '/material/checkbox',
                 iconText: 'C',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Dialog',
                 path: '/material/dialog',
                 iconText: 'D',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Drag and Drop',
                 iconText: 'D',
                 path: '/others/drag-and-drop',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Expansion Panel',
                 path: '/material/expansion-panel',
                 iconText: 'E',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Form',
                 path: '/material/form',
                 iconText: 'F',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Icons',
                 path: '/material/icons',
                 iconText: 'I',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Menu',
                 path: '/material/menu',
                 iconText: 'M',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Progress',
                 path: '/material/progress',
                 iconText: 'P',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Radio',
                 path: '/material/radio',
                 iconText: 'R',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Switch',
                 path: '/material/switch',
                 iconText: 'S',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Slider',
                 path: '/material/slider',
                 iconText: 'S',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Snackbar',
                 path: '/material/snackbar',
                 iconText: 'S',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Table',
                 path: '/material/table',
                 iconText: 'T',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
         ],
@@ -260,7 +260,7 @@ export const navigations = [
     {
         name: 'Utilities',
         icon: 'format_list_bulleted',
-        auth: authRoles.controlador,
+        auth: authRoles.maestro,
 
         children: [
             {
@@ -279,28 +279,28 @@ export const navigations = [
                 name: 'Typography',
                 path: '/utilities/typography',
                 iconText: 'T',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Display',
                 path: '/utilities/display',
                 iconText: 'D',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Position',
                 path: '/utilities/position',
                 iconText: 'P',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
             {
                 name: 'Shadow',
                 path: '/utilities/shadow',
                 iconText: 'S',
-                auth: authRoles.controlador,
+                auth: authRoles.maestro,
 
             },
         ],
@@ -323,7 +323,7 @@ export const navigations = [
     {
         name: 'Usuarios',
         icon: 'trending_up',
-        auth: authRoles.controlador,
+        auth: authRoles.maestro,
 
         children: [
             {
