@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
 import {
     Button,
@@ -17,15 +17,16 @@ import {
     Select,
     MenuItem,
     TextField,
-} from '@material-ui/core'
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
+} from '@material-ui/core';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
-import SimpleCheckbox from 'app/views/material-kit/checkbox/SimpleCheckbox'
-import LabelledCheckbox from 'app/views/material-kit/checkbox/LabelledCheckbox'
-import LoteriaCheckBox from 'app/components/formulario/LoteriaCheckBox'
-import PlacingCheckboxLabel from 'app/views/material-kit/checkbox/PlacingCheckboxLabel'
-import FormGroupCheckbox from 'app/views/material-kit/checkbox/FormGroupCheckbox'
-import { Breadcrumb, SimpleCard } from 'app/components'
+import SimpleCheckbox from 'app/views/material-kit/checkbox/SimpleCheckbox';
+import LabelledCheckbox from 'app/views/material-kit/checkbox/LabelledCheckbox';
+import LoteriaCheckBox from 'app/components/formulario/LoteriaCheckBox';
+import PlacingCheckboxLabel from 'app/views/material-kit/checkbox/PlacingCheckboxLabel';
+import FormGroupCheckbox from 'app/views/material-kit/checkbox/FormGroupCheckbox';
+import { Breadcrumb, SimpleCard } from 'app/components';
+import usePOS from 'app/hooks/usePOS';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,11 +38,46 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const LoteriaPos = () => {
+    const { getJuegosLoteria, juegosLoterias } = usePOS()
+
+    const [stateJuegos, setStateJuegos] = useState({});
     const [state, setState] = useState({
         numeros: '',
         montoApostar: 0,
         tipoJugada: ''
     });
+
+
+    useEffect(() => {
+        getJuegosLoteria()
+    }, []);
+
+    useEffect(() => {
+        // console.log('se modifico: ', juegosLoterias)
+        const data = {};
+        
+        if(juegosLoterias !== undefined && juegosLoterias.length > 0) {
+            juegosLoterias.forEach((key, index) => {
+                key.juegos.forEach((key2, index2) => {
+                    // console.log('prueba...', key2);
+                    // data.push({
+                    //     [`juego_${key2.idJuego}`]: true
+                    // });
+                    data[`juego_${key2.idJuego}`] = true;
+                    // setState({
+                    //     ...state,
+                    //     [`juego_${key2.idJuego}`]: true,
+                    // })
+                });
+            });
+
+            // console.log('prueba: ', data);
+            setStateJuegos(data);
+            // setCargado(true);
+        }
+        
+
+    }, [juegosLoterias])
 
     const handleChange = (event) => {
         event.persist()
@@ -59,6 +95,10 @@ const LoteriaPos = () => {
             •
         </Box>
     )
+
+    const comprobarObjeto =(obj) => {
+        // return (Object.keys)
+    }
 
     return (
         <div className="m-sm-30">
@@ -84,7 +124,10 @@ const LoteriaPos = () => {
                 <ValidatorForm>
                     <Grid container>
                         <Grid item lg={12} sm={12} xs={12} className="pb-5">
-                            <LoteriaCheckBox />
+                            {Object.keys(stateJuegos).length > 0 && (
+                                <LoteriaCheckBox setStateJuegos={setStateJuegos} stateJuegos={stateJuegos} juegosLoterias={juegosLoterias}/>
+                            )}
+                            
                         </Grid>
                         <Grid item lg={8} sm={12} xs={12}>
                             <Grid container spacing={6}>

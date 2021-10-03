@@ -16,6 +16,7 @@ import { GeneralProvider } from 'app/contexts/GeneralContext';
 import { HorarioProvider } from 'app/contexts/HorarioContext';
 import { TerminalProvider } from 'app/contexts/TerminalContext';
 import { UsuarioProvider } from 'app/contexts/UsuarioContext';
+import { POSProvider } from 'app/contexts/POSContext';
 
 const App = () => {
     return (
@@ -33,6 +34,7 @@ const App = () => {
                                     <HorarioProvider>
                                     <TerminalProvider>
                                     <UsuarioProvider>
+                                    <POSProvider>
                                         <Switch>
                                             {/* AUTHENTICATION PAGES (SIGNIN, SIGNUP ETC.) */}
                                             {sessionRoutes.map((item, i) => (
@@ -48,6 +50,7 @@ const App = () => {
                                                 {/* RETURNS <Layout1/> component */}
                                             </AuthGuard>
                                         </Switch>
+                                    </POSProvider>
                                     </UsuarioProvider>
                                     </TerminalProvider>
                                     </HorarioProvider>

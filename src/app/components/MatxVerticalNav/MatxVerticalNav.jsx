@@ -79,7 +79,7 @@ const MatxVerticalNav = ({ items }) => {
                         </p>
                     )
                 if (item.children) {
-                    console.log('veficiar...', item.children)
+                    // console.log('veficiar...', item.children)
                     return (
                         <MatxVerticalNavExpansionPanel
                             mode={mode}
