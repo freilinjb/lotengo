@@ -92,7 +92,7 @@ export default function LoteriaCheckBox({stateJuegos, juegosLoterias}) {
       useEffect(() => {
         // setCargado(false);
 
-        console.log('actualizo');
+        // console.log('actualizo');
         setCargado(true);
 
       }, [state])
@@ -103,7 +103,16 @@ export default function LoteriaCheckBox({stateJuegos, juegosLoterias}) {
           return (
             <FormControlLabel
                 key={j.idJuego+'-'+index+'-'}
-                control={<Checkbox checked={state[`juego_${j.idJuego}`]} name={`juego_${j.idJuego}`} onChange={handleChange2}/>}
+                data-idLoteria={j.idLoteria} 
+                control={<Checkbox 
+                        checked={state[`juego_${j.idJuego}`]} 
+                        name={`juego_${j.idJuego}`} 
+                        id={`juego_${j.idJuego}`} 
+                        data-idJuego={`juego_${j.idJuego}`} 
+                        data-nombre={`juego_${j.idJuego}`} 
+                        data-idLoteria={j.idLoteria} 
+                        className="loteria" 
+                        onChange={handleChange2}/>}
                 label={j.nombre}
             />
           )
@@ -132,9 +141,9 @@ export default function LoteriaCheckBox({stateJuegos, juegosLoterias}) {
                             <CardContent>
                                 {p.juegos.length > 0 && (
                                     <FormGroup key={p.idLoteria + '_'+index}>
-                                        {p.juegos.map((j) => {
+                                        {p.juegos.map((j, index2) => {
                                             return (    
-                                                <FormCheck j={j} index={index}/>
+                                                <FormCheck j={j} index={index} key={j.idLoteria+'_'+index2}/>
                                         )})}
                                     </FormGroup>
                                 )}
