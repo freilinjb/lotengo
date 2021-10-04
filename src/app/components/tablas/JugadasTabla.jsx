@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {
     Table,
     TableHead,
@@ -54,18 +54,40 @@ const subscribarList = [
     },
 ]
 
-const JugadasTable = () => {
+const JugadasTable = ({juegosLoterias, jugadas}) => {
+    const [datos, setDatos] = useState([])
+    useEffect(() => {
+
+        console.log('naruto1: ', jugadas);
+        console.log('naruto2: ', juegosLoterias);
+
+    },[juegosLoterias, jugadas]);
+
+    const generarArreglo = () => {
+        // if(juegosLoterias.length > 0) {
+        //     juegosLoterias.forEach((key, index) => {
+        //         jugadas.forEach((key2, index2) => {
+        //             if(key.idLoteria === key.loterias) {
+                        
+        //             }
+        //         });
+        //     });
+            
+            
+        // }
+
+    }
+
     return (
         <div className="w-full overflow-auto">
             <Table className="whitespace-pre">
                 <TableHead>
                     <TableRow>
-                        <TableCell className="px-0">Name</TableCell>
-                        <TableCell className="px-0">Company</TableCell>
-                        <TableCell className="px-0">Start Date</TableCell>
-                        <TableCell className="px-0">Status</TableCell>
-                        <TableCell className="px-0">Amount</TableCell>
-                        <TableCell className="px-0">Action</TableCell>
+                        <TableCell className="px-0">#</TableCell>
+                        <TableCell className="px-0">Tipo de Jugada</TableCell>
+                        <TableCell className="px-0">Numeros</TableCell>
+                        <TableCell className="px-0">Monto</TableCell>
+                        <TableCell className="px-0">Acción</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -73,7 +95,7 @@ const JugadasTable = () => {
                         <>
                         {index === 1  && (
                             <TableRow>
-                                <TableCell colSpan={6}>
+                                <TableCell colSpan={5}>
                                     Hola Mundo
                                 </TableCell>
                             </TableRow>
