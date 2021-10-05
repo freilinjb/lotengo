@@ -44,7 +44,7 @@ export default function LoteriaCheckBox({stateJuegos, juegosLoterias}) {
     useEffect(() => {
         // getJuegosLoteria()
         // console.log('prueba, ');
-    }, [])
+    }, [juegosLoterias])
 
     // useEffect(() => {
     //     // console.log('se modifico: ', juegosLoterias)

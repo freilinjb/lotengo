@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Table,
     TableHead,
@@ -54,14 +54,15 @@ const subscribarList = [
     },
 ]
 
-const JugadasTable = ({juegosLoterias, jugadas}) => {
+const JugadasTable = ({juegosLoterias, jugadas, loterias}) => {
     const [datos, setDatos] = useState([])
     useEffect(() => {
 
-        console.log('naruto1: ', jugadas);
-        console.log('naruto2: ', juegosLoterias);
+        // console.log('naruto1: ', jugadas);
+        // console.log('naruto2: ', juegosLoterias);
+        console.log('naruto: ', jugadas);
 
-    },[juegosLoterias, jugadas]);
+    },[jugadas]);
 
     const generarArreglo = () => {
         // if(juegosLoterias.length > 0) {
@@ -82,7 +83,10 @@ const JugadasTable = ({juegosLoterias, jugadas}) => {
         <div className="w-full overflow-auto">
             <Table className="whitespace-pre">
                 <TableHead>
-                    <TableRow>
+                    <TableRow style={{
+                        fontSize: 24,
+                        fontWeight: 'bold',
+                    }}>
                         <TableCell className="px-0">#</TableCell>
                         <TableCell className="px-0">Tipo de Jugada</TableCell>
                         <TableCell className="px-0">Numeros</TableCell>
@@ -91,38 +95,48 @@ const JugadasTable = ({juegosLoterias, jugadas}) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {subscribarList.map((subscriber, index) => (
+                    {loterias.map((key, index) => (
                         <>
-                        {index === 1  && (
-                            <TableRow>
+                         <TableRow key={index}>
                                 <TableCell colSpan={5}>
-                                    Hola Mundo
+                                    <img src={key.urlLogo} alt="Logo de la Loteria" 
+                                        style={{width: 65, heigth: 65}}
+                                    />
+                                    {key.nombre}
                                 </TableCell>
                             </TableRow>
-                        )}
 
+                            {jugadas.map((key2, index2) => (
+                                <TableRow>
+                                    <TableCell><p>{index+1}</p></TableCell>
+                                    <TableCell>{key.tipoJugada}</TableCell>
+                                    <TableCell>{key2.numeros}</TableCell>
+                                    <TableCell> $RD {key2.montoApostar}</TableCell>
+                                </TableRow>
+                            ))}
+{/* 
                         <TableRow key={index}>
                             <TableCell className="px-0 capitalize" align="left">
-                                {subscriber.name}
+                                {key.name}
                             </TableCell>
                             <TableCell className="px-0 capitalize" align="left">
-                                {subscriber.company}
+                                {key.company}
                             </TableCell>
                             <TableCell className="px-0 capitalize" align="left">
-                                {subscriber.date}
+                                {key.date}
                             </TableCell>
                             <TableCell className="px-0 capitalize">
-                                {subscriber.status}
+                                {key.status}
                             </TableCell>
                             <TableCell className="px-0 capitalize">
-                                ${subscriber.amount}
+                                ${key.amount}
                             </TableCell>
                             <TableCell className="px-0">
                                 <IconButton>
                                     <Icon color="error">close</Icon>
                                 </IconButton>
                             </TableCell>
-                        </TableRow>
+                        </TableRow> */}
                         </>
                     ))}
                 </TableBody>

@@ -31,6 +31,7 @@ const LoteriaPos = () => {
     const { getJuegosLoteria, juegosLoterias } = usePOS()
 
     const [stateJuegos, setStateJuegos] = useState({})
+    const [loterias, setLoterias] = useState([])
     const [state, setState] = useState({
         numeros: '',
         montoApostar: 0,
@@ -41,6 +42,10 @@ const LoteriaPos = () => {
     useEffect(() => {
         getJuegosLoteria()
     }, [])
+
+    useEffect(() => {
+        console.log('cambio la loteria: ', loterias);
+    },[loterias]);
 
     useEffect(() => {
         const data = {}
@@ -105,10 +110,43 @@ const LoteriaPos = () => {
         const verificacion = document.querySelectorAll('.loteria');
         const loteriaTemp = [];
         const juegoTemp = [];
+        const estado = [];
         verificacion.forEach((key, index) => {
-            if(document.getElementById(key.getAttribute('data-nombre')).checked) {
-                if(!loteriaTemp.includes(Number(key.getAttribute('data-idLoteria')))) {
-                    loteriaTemp.push(Number(key.getAttribute('data-idLoteria')));
+            const verificacion = document.getElementById(key.getAttribute('data-nombre')).checked;
+            if(verificacion) {
+                const idLoteria = Number(key.getAttribute('data-idLoteria'));
+                // console.log('verificacion: ', (loteriaTemp.filter((f => f.idLoteria === idLoteria)).length === 0));
+                const lt = juegosLoterias.filter((f => f.idLoteria === idLoteria));
+  
+                console.log()
+                if(estado.filter((f => f.idLoteria === idLoteria)).length === 0) {
+                    // setLoterias([...loterias, {
+                    //     idLoteria: idLoteria,
+                    //     nombre: lt[0].nombre,
+                    //     urlLogo: lt[0].urlLogo,
+                    // }]);
+                    estado.push({
+                        idLoteria: idLoteria,
+                        nombre: lt[0].nombre,
+                        urlLogo: lt[0].urlLogo,
+                    });
+                }
+
+                // console.log('estado: ', estado);
+
+
+                // console.log('asdf asdf: ', loterias);
+
+                if(loteriaTemp.filter((f => f.idLoteria === idLoteria)).length === 0) {
+                    const lt = juegosLoterias.filter((f => f.idLoteria === idLoteria));
+                    // console.log('filtrado: ', lt);
+
+                    // return;
+                    loteriaTemp.push({
+                        idLoteria: idLoteria,
+                        nombre: lt[0].nombre,
+                        urlLogo: lt[0].urlLogo,
+                    });
                 } 
                 const idJuego = Number(String(key.getAttribute('data-idJuego').substring(6, key.getAttribute('data-idJuego').length)));
 
@@ -119,6 +157,27 @@ const LoteriaPos = () => {
                 // document.getElementById(key.getAttribute('data-nombre')).click();
             }
         });
+
+        
+
+        const temp = loterias;
+
+        console.log('antes: ', temp);
+        estado.forEach((key, index) => {
+            if(temp.filter((f => f.idLoteria === key.idLoteria)).length === 0) {
+                temp.push({
+                    idLoteria: key.idLoteria,
+                    nombre: key.nombre,
+                    urlLogo: key.urlLogo
+                });
+            }
+        });
+
+        console.log('despues: ', temp);
+
+
+        setLoterias(temp);
+        console.log('asdfasdf: ', estado);
         setJugadas([...jugadas, {
             numeros: state.numeros,
             montoApostar: state.montoApostar,
@@ -127,19 +186,17 @@ const LoteriaPos = () => {
             juegos: juegoTemp
         }]);
 
-        console.log('prueba');
+        console.log('jugadas: ', loterias);
         setState({
             numeros: '10-56-55',
             montoApostar: 100,
             tipoJugada: 'TRIPLETA',
-            loterias: loteriaTemp,
-            juegos: juegoTemp
         });
 
         // console.log(Object.keys(stateJuegos).map((key) => [(key), stateJuegos[key] === true]));
 
         // document.getElementById('juego_13').parentNode.parentNode.getAttribute('data-idloteria')
-        console.log('prueba: ', jugadas);
+        // console.log('prueba: ', jugadas);
     }
 
     return (
@@ -173,7 +230,14 @@ const LoteriaPos = () => {
 
             <div className="" />
             <SimpleCard title="Checkbox with Label">
-                <ValidatorForm>
+                <ValidatorForm
+                    id="formularioJugada"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+
+                        console.log('submit');
+                    }}
+                >
                     <Grid container>
                         <Grid item lg={12} sm={12} xs={12} className="pb-5">
                             {Object.keys(stateJuegos).length > 0 && (
@@ -188,6 +252,7 @@ const LoteriaPos = () => {
                             <Grid container spacing={6}>
                                 <Grid item lg={5} sm={5} xs={5}>
                                     <TextValidator
+                                        style={{fontSize: '30px'}}
                                         className="mb-4 w-full"
                                         label="Numeros"
                                         onChange={handleChange}
@@ -240,7 +305,7 @@ const LoteriaPos = () => {
                         </Grid>
                     </Grid>
                     {/* GENERAR LAS TABLAS */}
-                    <JugadasTabla />
+                    <JugadasTabla juegosLoterias={juegosLoterias} jugadas={jugadas} loterias={loterias}/>
                 </ValidatorForm>
             </SimpleCard>
             <div className="py-3" />
