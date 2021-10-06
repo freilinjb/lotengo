@@ -108,7 +108,7 @@ export default function LoteriaCheckBox({stateJuegos, juegosLoterias}) {
                         checked={state[`juego_${j.idJuego}`]} 
                         name={`juego_${j.idJuego}`} 
                         id={`juego_${j.idJuego}`} 
-                        data-idJuego={`juego_${j.idJuego}`} 
+                        data-idJuego={`${j.idJuego}`} 
                         data-nombre={`juego_${j.idJuego}`} 
                         data-idLoteria={j.idLoteria} 
                         className="loteria" 

@@ -37,7 +37,8 @@ const LoteriaPos = () => {
         montoApostar: 0,
         tipoJugada: '',
     })
-    const [jugadas, setJugadas] = useState([])
+    const [jugadas, setJugadas] = useState([]);
+    const [juegos, setJuegos] = useState([]);
 
     useEffect(() => {
         getJuegosLoteria()
@@ -117,8 +118,8 @@ const LoteriaPos = () => {
                 const idLoteria = Number(key.getAttribute('data-idLoteria'));
                 // console.log('verificacion: ', (loteriaTemp.filter((f => f.idLoteria === idLoteria)).length === 0));
                 const lt = juegosLoterias.filter((f => f.idLoteria === idLoteria));
-  
-                console.log()
+                console.log('prueba de eso: ', lt);
+
                 if(estado.filter((f => f.idLoteria === idLoteria)).length === 0) {
                     // setLoterias([...loterias, {
                     //     idLoteria: idLoteria,
@@ -148,7 +149,7 @@ const LoteriaPos = () => {
                         urlLogo: lt[0].urlLogo,
                     });
                 } 
-                const idJuego = Number(String(key.getAttribute('data-idJuego').substring(6, key.getAttribute('data-idJuego').length)));
+                const idJuego = Number(key.getAttribute('data-idJuego'));
 
                 if(!juegoTemp.includes(idJuego)) {
                     juegoTemp.push(idJuego);
