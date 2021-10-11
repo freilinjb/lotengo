@@ -66,7 +66,7 @@ const Layout1Topbar = () => {
     const theme = useTheme()
     const classes = useStyles()
     const { settings, updateSettings } = useSettings()
-    const { logout, user, usuario } = useAuth()
+    const { logout, usuario } = useAuth()
 
     console.log('usuarioPrueba: ', usuario);
     const isMdScreen = useMediaQuery(theme.breakpoints.down('md'))

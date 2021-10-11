@@ -3,10 +3,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Fade from '@material-ui/core/Fade'
-import { ValidatorForm, TextValidator, SelectValidator } from 'react-material-ui-form-validator'
-import { Autocomplete, createFilterOptions } from '@material-ui/lab'
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
+import { Autocomplete } from '@material-ui/lab'
 import useConsorcio from 'app/hooks/useConsorcio';
-import useTerminal from 'app/hooks/useTerminal';
 import useGeneral from 'app/hooks/useGeneral';
 import Swal from 'sweetalert2';
 
@@ -47,11 +46,10 @@ export default function TerminalRegistroModal({
     terminalActualizar,
 }) {
     const { actualizarTerminar, registrarTerminal, getTerminales } = useConsorcio();
-    const {  } = useTerminal();
     const { getCiudades, ciudades } = useGeneral()
-    const [age, setAge] = React.useState('');
     useEffect(() => {
         getCiudades();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [state, setState] = useState({
@@ -98,6 +96,7 @@ export default function TerminalRegistroModal({
             });
             console.log('registrando: ', terminalActualizar);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [terminalActualizar]);
 
     const handleSubmit = async (event) => {
@@ -133,15 +132,8 @@ export default function TerminalRegistroModal({
         })
     }
 
-    const handleDateChange = (date) => {
-        setState({ ...state, date })
-    }
-
     const classes = useStyles()
 
-    const handleOpen = () => {
-        setOpen(true)
-    }
 
     const handleClose = () => {
         setOpen(false)
@@ -193,7 +185,7 @@ export default function TerminalRegistroModal({
                                         <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={age}
+                                        value={100}
                                         onChange={handleChange}
                                         >
                                         <MenuItem value={10}>Ten</MenuItem>

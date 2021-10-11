@@ -21,6 +21,7 @@ const Usuario = () => {
     useEffect(() => {
         saludar('Freilin Jose')
         consultarFetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const openModalActualizar = (usuarios) => {
@@ -155,10 +156,6 @@ const Usuario = () => {
             },
         },
     ]
-
-    const handleClick = (e) => {
-        console.log('Hola', e)
-    }
     
     const CustomToolbar = () => (
       <Tooltip title={"Agregar nuevo usuario"}>

@@ -245,13 +245,6 @@ export const AuthProvider = ({ children }) => {
                     // console.log('Usuario: ', usuario);
 
                     // const { user } = response.data
-                    const user = {
-                        avatar: '/assets/images/face-6.jpg',
-                        email: 'freilinjb@gmail.com',
-                        id: 1,
-                        name: 'Freilin Jose Jerez',
-                        role: 'GUEST',
-                    }
 
                     dispatch({
                         type: 'INIT',

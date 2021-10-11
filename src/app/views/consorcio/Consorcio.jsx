@@ -23,6 +23,7 @@ const Consorcio = () => {
     useEffect(() => {
         saludar('Freilin Jose')
         consultarFetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const openModalActualizar = (consorcio) => {
@@ -90,7 +91,7 @@ const Consorcio = () => {
             name: 'estado',
             options: {
                 customBodyRender: (value, tableMeta, updateValue) => {
-                    if(value == 1) {
+                    if(value === 1) {
                         return (<small className="border-radius-4 bg-primary text-white px-2 py-2px">Activo </small>)
                     } else {
                         return (<small className="border-radius-4 bg-error text-white px-2 py-2px">Inactivo </small>)
@@ -128,10 +129,6 @@ const Consorcio = () => {
             },
         },
     ]
-
-    const handleClick = (e) => {
-        console.log('Hola', e)
-    }
     
     const CustomToolbar = () => (
       <Tooltip title={"Agregar nuevo consorcio"}>

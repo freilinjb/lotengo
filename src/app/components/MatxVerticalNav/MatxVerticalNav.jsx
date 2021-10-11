@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Icon } from '@material-ui/core'
 import TouchRipple from '@material-ui/core/ButtonBase'
@@ -45,10 +45,6 @@ const useStyles = makeStyles(({ palette, ...theme }) => ({
 
 const MatxVerticalNav = ({ items }) => {
     const { usuario } = useAuth()
-
-    useEffect(() => {
-        console.log('prueba...',usuario);
-    },[])
 
     const { settings } = useSettings()
     const { mode } = settings.layout1Settings.leftSidebar

@@ -1,5 +1,4 @@
 import { authRoles } from './auth/authRoles';
-import useAuth from 'app/hooks/useAuth';
 
 export const navigations = [
     {

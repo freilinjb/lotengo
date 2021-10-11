@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import {
     Button,
@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 import Swal from 'sweetalert2';
 
-import { makeStyles } from '@material-ui/core/styles';
 import 'date-fns';
 import useTerminal from 'app/hooks/useTerminal'; 
 import useConsorcio from 'app/hooks/useConsorcio'; 
@@ -48,6 +47,8 @@ const TerminalFormulario = () => {
         getCiudades();
         getConsorcios();
         console.log('Actualizando la terminal: ', consorcios);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     const consultarTerminal = async(idTerminal) => {
@@ -67,7 +68,6 @@ const TerminalFormulario = () => {
                 sector: String(respuesta.data.idSector), 
                 direccion: respuesta.data.direccion,  
                 observacion: respuesta.data.observacion,  
-                correo: respuesta.data.correo,  
                 estado: String(respuesta.data.estado),  
 
             });
@@ -77,6 +77,7 @@ const TerminalFormulario = () => {
         if(id > 0) {
             consultarTerminal(id);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[id]);
     useEffect(() => {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
@@ -114,14 +115,6 @@ const TerminalFormulario = () => {
             [event.target.name]: event.target.value,
         })
     }
-
-    const {
-        username,
-        firstName,
-        gender,
-        email,
-        consorcio
-    } = state;
 
     return (
             <ValidatorForm onSubmit={handleSubmit} onError={() => null}>

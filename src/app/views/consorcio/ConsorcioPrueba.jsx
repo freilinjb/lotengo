@@ -84,9 +84,9 @@ const ConsorcioPrueba = () => {
           "hola"
       ];
 
-      const [responsive, setResponsive] = useState("vertical");
-      const [tableBodyHeight, setTableBodyHeight] = useState("400px");
-      const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("");
+      // const [responsive, setResponsive] = useState("vertical");
+      // const [tableBodyHeight, setTableBodyHeight] = useState("400px");
+      // const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("");
     
     //   const columns = ["Name", "Title2", "Location2",
     //   {
@@ -116,11 +116,11 @@ const ConsorcioPrueba = () => {
         selectableRowsHideCheckboxes: false,
         download: false,
         viewColumns: false,
-        responsive,
+        responsive: "vertical",
         selectableRows: "none",
         // print: false,
-        tableBodyHeight,
-        tableBodyMaxHeight
+        tableBodyHeight: "400px",
+        tableBodyMaxHeight: ''
       };
       const data = [
         ["Gabby George", "Business Analyst", "Minneapolis"],

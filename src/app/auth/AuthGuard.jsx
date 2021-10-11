@@ -19,7 +19,6 @@ const getUserRoleAuthStatus = (pathname, usuario, routes) => {
 const AuthGuard = ({ children }) => {
     const {
         isAuthenticated,
-        user,
         usuario
     } = useAuth()
 

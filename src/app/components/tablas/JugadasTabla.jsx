@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
     Table,
     TableHead,
@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core'
 
 const JugadasTable = ({ jugadas, loterias }) => {
-    
+
     return (
         <div className="w-full overflow-auto">
             <TableContainer component={Paper}>

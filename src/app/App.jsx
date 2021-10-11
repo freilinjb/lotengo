@@ -17,17 +17,17 @@ import { HorarioProvider } from 'app/contexts/HorarioContext';
 import { TerminalProvider } from 'app/contexts/TerminalContext';
 import { UsuarioProvider } from 'app/contexts/UsuarioContext';
 import { POSProvider } from 'app/contexts/POSContext';
-import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
+// import { ThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles';
 
-const theme = createMuiTheme();
-const useStyles = makeStyles((theme) => {
-    root: {
-      // some css that access to theme
-    }
-  });
+// const theme = createMuiTheme();
+// const useStyles = makeStyles((theme) => {
+//     root: {
+//       // some css that access to theme
+//     }
+//   });
 const App = () => {
 
-    const classes = useStyles(); 
+    // const classes = useStyles(); 
     return (
         <AppContext.Provider value={{ routes }}>
             <Provider store={Store}>

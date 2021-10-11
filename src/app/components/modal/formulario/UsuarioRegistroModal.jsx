@@ -24,7 +24,6 @@ import {
     Checkbox
 } from '@material-ui/core'
 import 'date-fns'
-import { string } from 'yup'
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -86,10 +85,12 @@ export default function UsuarioRegistroModal({
         } catch (error) {
             console.log('error: ', error)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[ciudades, roles]);
 
     useEffect(() => {
         consultarFetch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [state, setState] = useState({
@@ -151,6 +152,7 @@ export default function UsuarioRegistroModal({
             })
             console.log('registrando: ', usuarioActualizar)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [usuarioActualizar])
 
     const handleSubmit = async (event) => {
@@ -309,7 +311,7 @@ export default function UsuarioRegistroModal({
                                                 autoComplete
                                                 name="rol"
                                                 options={roles}
-                                                defaultValue={roles.find(v => v.idRol == state.rol)}
+                                                defaultValue={roles.find(v => v.idRol === state.rol)}
                                                 onChange={(event, newValue) => {
                                                     if (newValue !== null) {
                                                         setState({
@@ -436,7 +438,7 @@ export default function UsuarioRegistroModal({
                                             <Autocomplete
                                                 name="ciudad"
                                                 options={ciudades}
-                                                defaultValue={datos.ciudades.find(v => v.idCiudad == state.ciudad)}
+                                                defaultValue={datos.ciudades.find(v => v.idCiudad === state.ciudad)}
                                                 onChange={(event, newValue) => {
                                                     if (newValue !== null) {
                                                         setState({
@@ -471,7 +473,7 @@ export default function UsuarioRegistroModal({
                                             <Autocomplete
                                                 name="sector"
                                                 options={datos.ciudades}
-                                                 defaultValue={datos.ciudades.find(v => v.idCiudad == state.ciudad)}
+                                                 defaultValue={datos.ciudades.find(v => v.idCiudad === state.ciudad)}
                                                 onChange={(event, newValue) => {
                                                     if (newValue !== null) {
                                                         setState({

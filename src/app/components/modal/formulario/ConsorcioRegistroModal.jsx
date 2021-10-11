@@ -44,11 +44,11 @@ export default function ConsorcioRegistroModal({
 }) {
     const { actualizarConsorcio, registrarConsorcio, getConsorcios } =
         useConsorcio()
-    const { getCiudades, ciudades } = useGeneral()
+    // const { getCiudades } = useGeneral()
 
-    useEffect(() => {
-        getCiudades()
-    }, [])
+    // useEffect(() => {
+    //     getCiudades()
+    // }, [])
 
     const [state, setState] = useState({
         idConsorcio: 0,

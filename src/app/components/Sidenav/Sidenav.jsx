@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import Scrollbar from 'react-perfect-scrollbar'
 import { navigations } from 'app/navigations'
-import { MatxVerticalNav, MatxHorizontalNav } from 'app/components'
+import { MatxVerticalNav } from 'app/components'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 import useSettings from 'app/hooks/useSettings'
