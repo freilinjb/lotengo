@@ -1,217 +1,192 @@
 import React, { useEffect, useState } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { green } from '@material-ui/core/colors'
-import { ScrollingCarousel, Carousel } from '@trendyol-js/react-carousel'
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
 import {
-    Button,
-    Icon,
-    Grid,
     FormGroup,
     Card,
-    CardActions,
-    Typography,
-    Box,
     CardHeader,
-    Avatar,
     CardContent,
     FormControlLabel,
     Checkbox,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    TextField,
 } from '@material-ui/core'
-import usePOS from 'app/hooks/usePOS'
+// import usePOS from 'app/hooks/usePOS';
 
-const GreenCheckbox = withStyles({
-    root: {
-        color: green[400],
-        '&$checked': {
-            color: green[600],
-        },
-    },
-    checked: {},
-})((props) => <Checkbox color="default" {...props} />)
-
-export default function LoteriaCheckBox({stateJuegos, juegosLoterias}) {
+export default function LoteriaCheckBox({ stateJuegos, juegosLoterias }) {
     // const { getJuegosLoteria, juegosLoterias } = usePOS()
 
     const [state, setState] = React.useState(stateJuegos)
+    const [juegos, setJuegos] = React.useState([])
     const [cargado, setCargado] = React.useState(false)
 
-
-    useEffect(() => {
-        // getJuegosLoteria()
-        // console.log('prueba, ');
-    }, [juegosLoterias])
-
-    // useEffect(() => {
-    //     // console.log('se modifico: ', juegosLoterias)
-    //     const data = {};
-        
-    //     if(juegosLoterias !== undefined && juegosLoterias.length > 0) {
-    //         juegosLoterias.forEach((key, index) => {
-    //             key.juegos.forEach((key2, index2) => {
-    //                 // console.log('prueba...', key2);
-    //                 // data.push({
-    //                 //     [`juego_${key2.idJuego}`]: true
-    //                 // });
-    //                 data[`juego_${key2.idJuego}`] = false;
-    //                 // setState({
-    //                 //     ...state,
-    //                 //     [`juego_${key2.idJuego}`]: true,
-    //                 // })
-    //             });
-    //         });
-
-    //         // console.log('prueba: ', data);
-    //         setState(data);
-    //         setCargado(true);
-    //     }
-        
-
-    // }, [juegosLoterias])
-
     const handleChange = (name) => (event) => {
-        console.log('name: ', name);
+        console.log('name: ', name)
         setState({ ...state, [name]: event.target.checked })
     }
 
     const handleChange2 = (event) => {
-        setCargado(false);
+        // setCargado(false)
 
         // console.log('nombre: ', String(event.target.name).substring(6,event.target.name.length));
         // console.log('valor: ', event.target.checked);
         setState({
-          ...state,
-          [event.target.name]: event.target.checked,
-        });
-      };
+            ...state,
+            [event.target.name]: event.target.checked,
+        })
+    }
 
-      useEffect(() => {
+    useEffect(() => {
         // setCargado(false);
 
         // console.log('actualizo');
-        setCargado(true);
+        if(!cargado) {
+            // console.log('prueba');=
+            setCargado(true)
+        }
+    }, [state]);
 
-      }, [state])
-
-      const FormCheck = ({j, index}) => {
+    const FormCheck = ({ j, index }) => {
         //   console.log('prueba: ', j);
         //   console.log('prueba: ', index);
-          return (
+        return (
             <FormControlLabel
-                key={j.idJuego+'-'+index+'-'}
-                data-idLoteria={j.idLoteria} 
-                control={<Checkbox 
-                        checked={state[`juego_${j.idJuego}`]} 
-                        name={`juego_${j.idJuego}`} 
-                        id={`juego_${j.idJuego}`} 
-                        data-idJuego={`${j.idJuego}`} 
-                        data-nombre={`juego_${j.idJuego}`} 
-                        data-idLoteria={j.idLoteria} 
-                        className="loteria" 
-                        onChange={handleChange2}/>}
+                key={j.idJuego + '-' + index + '-'}
+                // data-idLoteria={j.idLoteria}
+                control={
+                    <Checkbox
+                        checked={state[`juego_${j.idJuego}`]}
+                        name={`juego_${j.idJuego}`}
+                        id={`juego_${j.idJuego}`}
+                        data-idjuego={`${j.idJuego}`}
+                        data-urllogo={`${j.urlLogo}`}
+                        data-nombre={`juego_${j.idJuego}`}
+                        data-idloteria={j.idLoteria}
+                        data-juego={j.nombre}
+                        className="loteria"
+                        onChange={handleChange2}
+                    />
+                }
                 label={j.nombre}
             />
-          )
-      }
+        )
+    }
+
+    const responsive = {
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3,
+            slidesToSlide: 3, // optional, default to 1.
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2,
+            slidesToSlide: 2, // optional, default to 1.
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+            slidesToSlide: 1, // optional, default to 1.
+        },
+    }
 
     return (
         <>
-            {(juegosLoterias !== undefined && (cargado)) && (
+            {cargado && (
                 <>
-
-                <Carousel show={4} slide={4} swiping={true}>
-                    {juegosLoterias.map((p, index) => (
-                        <Card sx={{ maxWidth: 345 }} key={p.idLoteria+'-'+index}>
-                            <CardHeader
-                                avatar={
-                                    <img
-                                        // sx={{ width: 56, heigth: 56 }}
-                                        style={{ width: 56, heigth: 56 }}
-                                        aria-label="recipe"
-                                        alt={p.nombre}
-                                        src={p.urlLogo}
-                                    />
-                                }
-                                title={p.nombre}
-                            ></CardHeader>
-                            <CardContent>
-                                {p.juegos.length > 0 && (
-                                    <FormGroup key={p.idLoteria + '_'+index}>
-                                        {p.juegos.map((j, index2) => {
-                                            return (    
-                                                <FormCheck j={j} index={index} key={j.idLoteria+'_'+index2}/>
-                                        )})}
-                                    </FormGroup>
-                                )}
-                            </CardContent>
-                        </Card>
-                    ))}
-                </Carousel>
+                <Card
+                    sx={{ maxWidth: 345 }}
+                    style={{ maxHeight: 500 }}
+                >
+                    <Carousel
+                            additionalTransfrom={0}
+                            arrows
+                            // autoPlaySpeed={3000}
+                            centerMode={false}
+                            className=""
+                            containerClass="container-with-dots"
+                            dotListClass=""
+                            draggable
+                            focusOnSelect={false}
+                            infinite
+                            itemClass=""
+                            keyBoardControl
+                            // minimumTouchDrag={80}
+                            renderButtonGroupOutside={false}
+                            renderDotsOutside={false}
+                            responsive={{
+                              desktop: {
+                                breakpoint: {
+                                  max: 3000,
+                                  min: 1024
+                                },
+                                items: 3,
+                                partialVisibilityGutter: 40
+                              },
+                              mobile: {
+                                breakpoint: {
+                                  max: 464,
+                                  min: 0
+                                },
+                                items: 1,
+                                partialVisibilityGutter: 30
+                              },
+                              tablet: {
+                                breakpoint: {
+                                  max: 1024,
+                                  min: 464
+                                },
+                                items: 2,
+                                partialVisibilityGutter: 30
+                              }
+                            }}
+                            showDots={false}
+                            sliderClass=""
+                            slidesToSlide={1}
+                            swipeable
+                    >
+                        {/* <Carousel show={4} slide={3} swiping={true}> */}
+                        {juegosLoterias.map((p) => (
+                            <Card key={p.nombre}>
+                                <CardHeader
+                                    avatar={
+                                        <img
+                                            // sx={{ width: 56, heigth: 56 }}
+                                            style={{ width: 56, heigth: 56 }}
+                                            aria-label="recipe"
+                                            alt={p.nombre}
+                                            src={p.urlLogo}
+                                        />
+                                    }
+                                    title={p.nombre}
+                                ></CardHeader>
+                                <CardContent>
+                                    {p.juegos.length > 0 && (
+                                        <FormGroup
+                                            key={p.idLoteria}
+                                        >
+                                            {p.juegos.map((j, index2) => {
+                                                return (
+                                                    <FormCheck
+                                                        j={j}
+                                                        key={
+                                                            j.idLoteria +
+                                                            '_' +
+                                                            index2
+                                                        }
+                                                    />
+                                                )
+                                            })}
+                                        </FormGroup>
+                                    )}
+                                </CardContent>
+                            </Card>
+                        ))}
+                        {/* </Carousel> */}
+                     </Carousel> 
+                    </Card>
                 </>
             )}
-
-            {/* <Card sx={{ maxWidth: 345 }}>
-                    <CardHeader
-                        avatar={
-                            <Avatar
-                                sx={{ width: 56, heigth: 56 }}
-                                aria-label="recipe"
-                                alt="Logo loteria"
-                                src="https://s3.amazonaws.com/cdn.conectate-new.com/wp-content/uploads/2019/07/16144531/Loteria-Nacional-Dominicana.jpg"
-                            />
-                        }
-                        title="Loteka"
-                    ></CardHeader>
-                    <CardContent>
-                        <FormGroup>
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Juega + Pega +"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Gana Más"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Lotería Nacional"
-                            />
-                        </FormGroup>
-                    </CardContent>
-                </Card>
-                <Card sx={{ maxWidth: 345 }}>
-                    <CardHeader
-                        avatar={
-                            <Avatar
-                                sx={{ width: 56, heigth: 56 }}
-                                aria-label="recipe"
-                                alt="Logo loteria"
-                                src="https://s3.amazonaws.com/cdn.conectate-new.com/wp-content/uploads/2019/07/16144531/Loteria-Nacional-Dominicana.jpg"
-                            />
-                        }
-                        title="Loteka"
-                    ></CardHeader>
-                    <CardContent>
-                        <FormGroup>
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Juega + Pega +"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Gana Más"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Lotería Nacional"
-                            />
-                        </FormGroup>
-                    </CardContent>
-                </Card> */}
         </>
     )
 }
