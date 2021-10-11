@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Breadcrumb, SimpleCard } from 'app/components';
-import { Grid, IconButton, Icon, Avatar, Link } from '@material-ui/core';
+import { Grid, IconButton, Icon, Avatar } from '@material-ui/core';
 import MUIDataTable from 'mui-datatables';
 
 import useTerminal from 'app/hooks/useTerminal';
 import useGeneral from 'app/hooks/useGeneral';
 import AddIcon from '@material-ui/icons/Add'
 import Tooltip from "@material-ui/core/Tooltip";
-import Swal from 'sweetalert2';
 
 import TerminalRegistroModal from 'app/components/modal/formulario/TerminalRegistroModal';
 
@@ -30,46 +29,9 @@ const Terminal = () => {
         consultarFetch();
     }, []);
 
-    const openModalActualizar = (consorcio) => {
-        setTerminalActualizar(consorcio);
-
-        setOpen(true);
-    }
-
-    const openModalRegistrar = () => {
-        setTerminalActualizar(false);
-        setOpen(true);
-    }
-
     useEffect(() => {
         console.log('Terminal: ', terminales)
     }, [terminales]);
-
-    const eliminarConsorcio = async (data) => {
-        Swal.fire({
-            title: 'Confirmación',
-            text: `Estas seguro de querer borrar esta terminal ${data.nombre}!`,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, borrarlo!'
-          }).then( async(result) => {
-            if (result.isConfirmed) {
-               const resultados = await eliminarTerminalByID(data.idTerminal);
-                console.log('ResulSwal: ', resultados);
-
-                if(resultados.success === true) {
-                    Swal.fire(
-                        'Borrado!',
-                        `${resultados.msg}!!`,
-                        'success'
-                      )
-                      consultarFetch();
-                }
-            }
-          })
-    }
     
     const columns = [
         {
